@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.checc.com/demo/namespace/informcaseservice/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="InformCaseService"
+    targetNamespace="http://www.checc.com/demo/namespace/informcaseservice/">
+    <!-- 定义webservice使用的数据类型 -->
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.checc.com/demo/namespace/informcaseservice/" >
+            <xsd:element name="inform">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element name="area" type="xsd:string" />
+                        <xsd:element name="year" type="xsd:int" />
+                    </xsd:all>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="informByType">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element name="area" type="xsd:string" />
+                    </xsd:all>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="informResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" maxOccurs="unbounded" type="tns:informResult"></xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="informByTypeResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" maxOccurs="unbounded" type="tns:informResult"></xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:complexType name="informResult">
+                <xsd:sequence>
+                    <xsd:element name="total" type="xsd:int" />
+                    <xsd:element name="year" type="xsd:int" />
+                    <xsd:element name="month" type="xsd:int" />
+                    <xsd:element name="areaCode" type="xsd:string" />
+                    <xsd:element name="areaName" type="xsd:string" />
+                    <xsd:element name="longitude" type="xsd:double" />
+                    <xsd:element name="latitude" type="xsd:double" />
+                    <xsd:element name="typeCode">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="030301" />
+                                <xsd:enumeration value="030302" />
+                                <xsd:enumeration value="030303" />
+                                <xsd:enumeration value="030304" />
+                                <xsd:enumeration value="030305" />
+                                <xsd:enumeration value="030306" />
+                                <xsd:enumeration value="030307" />
+                                <xsd:enumeration value="030308" />
+                                <xsd:enumeration value="030309" />
+                                <xsd:enumeration value="030310" />
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="typeName" type="xsd:string" />
+                    <xsd:element name="informStatus" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="inform">
+        <wsdl:part name="parameter" element="tns:inform"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="informResponse">
+        <wsdl:part name="parameter" element="tns:informResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="informByType">
+        <wsdl:part name="parameter" element="tns:informByType"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="informByTypeResponse">
+        <wsdl:part name="parameter" element="tns:informByTypeResponse"></wsdl:part>
+    </wsdl:message>
+
+    <wsdl:portType name="InformService">
+        <wsdl:operation name="inform">
+            <wsdl:input message="tns:inform" />
+            <wsdl:output message="tns:informResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="informByType">
+            <wsdl:input message="tns:informByType" />
+            <wsdl:output message="tns:informByTypeResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <wsdl:binding name="informServiceSOAP" type="tns:InformService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="inform">
+            <soap:operation soapAction="http://www.checc.com/demo/namespace/informcaseservice/inform"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="informByType">
+            <soap:operation soapAction="http://www.checc.com/demo/namespace/informcaseservice/informByType"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <wsdl:service name="InformService">
+        <wsdl:port name="InformServiceSOAP" binding="tns:informServiceSOAP">
+            <soap:address location="http://localhost:8080/fujian-demo/service/InformCaseService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

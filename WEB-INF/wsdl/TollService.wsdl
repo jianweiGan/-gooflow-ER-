@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.checc.com/demo/namespace/tollservice/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TollService"
+    targetNamespace="http://www.checc.com/demo/namespace/tollservice/">
+    <!-- 定义webservice使用的数据类型 -->
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.checc.com/demo/namespace/tollservice/" >
+            <xsd:element name="toll">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="year" type="xsd:short" />
+                        <xsd:element name="month" type="xsd:byte" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="tollResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" maxOccurs="unbounded" type="tns:tollResult"></xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:complexType name="tollResult">
+                <xsd:sequence>
+                    <xsd:element name="tollAmounts" type="xsd:decimal" />
+                    <xsd:element name="count" type="xsd:int" />
+                    <xsd:element name="year" type="xsd:short" />
+                    <xsd:element name="month" type="xsd:byte" />
+                    <xsd:element name="areaCode" type="xsd:string" />
+                    <xsd:element name="areaName" type="xsd:string" />
+                    <xsd:element name="typeCode">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="040101" />
+                                <xsd:enumeration value="040102" />
+                                <xsd:enumeration value="040103" />
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="typeName" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="toll">
+        <wsdl:part name="parameter" element="tns:toll"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="tollResponse">
+        <wsdl:part name="parameter" element="tns:tollResponse"></wsdl:part>
+    </wsdl:message>
+    
+    <wsdl:portType name="ITollService">
+        <wsdl:operation name="toll">
+            <wsdl:input message="tns:toll" />
+            <wsdl:output message="tns:tollResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <wsdl:binding name="tollServiceSOAP" type="tns:ITollService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="toll">
+            <soap:operation soapAction="http://www.checc.com/demo/namespace/tollservice/toll"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <wsdl:service name="TollService">
+        <wsdl:port name="TollServiceSOAP" binding="tns:tollServiceSOAP">
+            <soap:address location="http://localhost:8080/fujian-demo/service/TollService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

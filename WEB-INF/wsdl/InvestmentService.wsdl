@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.checc.com/demo/namespace/investmentservice/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="InvestmentService"
+    targetNamespace="http://www.checc.com/demo/namespace/investmentservice/">
+    <!-- 定义webservice使用的数据类型 -->
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.checc.com/demo/namespace/investmentservice/" >
+            <xsd:element name="constructionInvestment" type="tns:investmentRequest" />
+            
+            <xsd:element name="maintenanceInvestment" type="tns:investmentRequest" />
+
+            <xsd:element name="constructionInvestmentOfYear" type="tns:investmentOfYearRequest" />
+            
+            <xsd:element name="maintenanceInvestmentOfYear" type="tns:investmentOfYearRequest" />
+            
+            <xsd:element name="constructionInvestmentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" maxOccurs="unbounded" type="tns:investmentResult"></xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="maintenanceInvestmentOfYearResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" maxOccurs="unbounded" type="tns:investmentResult"></xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="constructionInvestmentOfYearResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" maxOccurs="unbounded" type="tns:investmentResult"></xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="maintenanceInvestmentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" maxOccurs="unbounded" type="tns:investmentResult"></xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:complexType name="investmentRequest">
+                    <xsd:all>
+                        <xsd:element name="area" type="xsd:string" />
+                        <xsd:element name="year" type="xsd:int" />
+                    </xsd:all>
+            </xsd:complexType>
+            
+            <xsd:complexType name="investmentOfYearRequest">
+                    <xsd:all>
+                        <xsd:element name="area" type="xsd:string" />
+                        <xsd:element name="yearNum" type="xsd:int" />
+                    </xsd:all>
+            </xsd:complexType>
+            
+            <xsd:complexType name="investmentResult">
+                <xsd:sequence>
+                    <xsd:element name="investmentAmounts" type="xsd:decimal" />
+                    <xsd:element name="year" type="xsd:int" />
+                    <xsd:element name="month" type="xsd:int" />
+                    <xsd:element name="areaCode" type="xsd:string" />
+                    <xsd:element name="areaName" type="xsd:string" />
+                    <xsd:element name="longitude" type="xsd:double" />
+                    <xsd:element name="latitude" type="xsd:double" />
+                    <xsd:element name="categoryCode">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="010101" />
+                                <xsd:enumeration value="010102" />
+                                <xsd:enumeration value="010103" />
+                                <xsd:enumeration value="010104" />
+                                <xsd:enumeration value="010105" />
+                                <xsd:enumeration value="010106" />
+                                <xsd:enumeration value="020101" />
+                                <xsd:enumeration value="020102" />
+                                <xsd:enumeration value="020103" />
+                                <xsd:enumeration value="020104" />
+                                <xsd:enumeration value="020105" />
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="categoryName" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="constructionInvestment">
+        <wsdl:part name="parameter" element="tns:constructionInvestment"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="maintenanceInvestment">
+        <wsdl:part name="parameter" element="tns:maintenanceInvestment"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="constructionInvestmentResponse">
+        <wsdl:part name="parameter" element="tns:constructionInvestmentResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="maintenanceInvestmentResponse">
+        <wsdl:part name="parameter" element="tns:maintenanceInvestmentResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="constructionInvestmentOfYear">
+        <wsdl:part name="parameter" element="tns:constructionInvestmentOfYear"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="maintenanceInvestmentOfYear">
+        <wsdl:part name="parameter" element="tns:maintenanceInvestmentOfYear"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="constructionInvestmentOfYearResponse">
+        <wsdl:part name="parameter" element="tns:constructionInvestmentOfYearResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="maintenanceInvestmentOfYearResponse">
+        <wsdl:part name="parameter" element="tns:maintenanceInvestmentOfYearResponse"></wsdl:part>
+    </wsdl:message>
+    
+    <wsdl:portType name="IInvestmentService">
+        <wsdl:operation name="constructionInvestment">
+            <wsdl:input message="tns:constructionInvestment" />
+            <wsdl:output message="tns:constructionInvestmentResponse" />
+        </wsdl:operation>
+        
+        <wsdl:operation name="maintenanceInvestment">
+            <wsdl:input message="tns:maintenanceInvestment" />
+            <wsdl:output message="tns:maintenanceInvestmentResponse" />
+        </wsdl:operation>
+        
+        <wsdl:operation name="constructionInvestmentOfYear">
+            <wsdl:input message="tns:constructionInvestmentOfYear" />
+            <wsdl:output message="tns:constructionInvestmentOfYearResponse" />
+        </wsdl:operation>
+        
+        <wsdl:operation name="maintenanceInvestmentOfYear">
+            <wsdl:input message="tns:maintenanceInvestmentOfYear" />
+            <wsdl:output message="tns:maintenanceInvestmentOfYearResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <wsdl:binding name="investmentServiceSOAP" type="tns:IInvestmentService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="constructionInvestment">
+            <soap:operation soapAction="http://www.checc.com/demo/namespace/investmentservice/construction"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="maintenanceInvestment">
+            <soap:operation soapAction="http://www.checc.com/demo/namespace/investmentservice/maintenance"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="constructionInvestmentOfYear">
+            <soap:operation soapAction="http://www.checc.com/demo/namespace/investmentservice/constructionOfYear"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="maintenanceInvestmentOfYear">
+            <soap:operation soapAction="http://www.checc.com/demo/namespace/investmentservice/maintenanceOfYear"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <wsdl:service name="InvestmentService">
+        <wsdl:port name="InvestmentServiceSOAP" binding="tns:investmentServiceSOAP">
+            <soap:address location="http://localhost:8080/fujian-demo/service/InvestmentService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

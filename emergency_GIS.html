@@ -1,0 +1,589 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS分析展示平台</title>
+<script src="js/bmap/jquery.min.js"></script>
+<script src="js/bmap/echarts.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=FSzZET8GwDr3XqVa5f0TXXlG"></script>
+<script src="js/bmap//bmap.min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.js"></script>
+<link rel="stylesheet" href="css/gis_main.css">
+<link href="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" type="text/css" href="css/cloud-admin.css">
+<link rel="stylesheet" type="text/css" href="css/themes/default.css" id="skin-switcher">
+<link rel="stylesheet" type="text/css" href="css/responsive.css">
+
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<!-- JQUERY UI-->
+<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.min.css" />
+<!-- DATE RANGE PICKER -->
+<link rel="stylesheet" type="text/css" href="js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+<!-- DATA TABLES -->
+<link rel="stylesheet" type="text/css" href="js/datatables/media/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="js/datatables/media/assets/css/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="js/datatables/extras/TableTools/media/css/TableTools.min.css" />
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- FONTS -->
+<script>
+function showEcharts() {
+	var myChart = echarts.init(document.getElementById('map'));
+	$.get('data/fujian.json', function (data) {
+		myChart.hideLoading();
+		echarts.registerMap('fujian', data);
+		
+		var geoCoordMap = {
+			"福州市":[119.3,26.08],
+			"鼓楼区":[119.3,26.08],
+			"台江区":[119.3,26.07],
+			"仓山区":[119.32,26.05],
+			"马尾区":[119.45,26],
+			"晋安区":[119.32,26.08],
+			"闽侯县":[119.13,26.15],
+			"连江县":[119.53,26.2],
+			"罗源县":[119.55,26.48],
+			"闽清县":[118.85,26.22],
+			"永泰县":[118.93,25.87],
+			"平潭县":[119.78,25.52],
+			"福清市":[119.38,25.72],
+			"长乐市":[119.52,25.97],
+			"厦门市":[118.08,24.48],
+			"思明区":[118.08,24.45],
+			"海沧区":[117.98,24.47],
+			"湖里区":[118.08,24.52],
+			"集美区":[118.1,24.57],
+			"同安区":[118.15,24.73],
+			"翔安区":[118.23,24.62],
+			"莆田市":[119,25.43],
+			"城厢区":[119,25.43],
+			"涵江区":[119.1,25.45],
+			"荔城区":[119.02,25.43],
+			"秀屿区":[119.08,25.32],
+			"仙游县":[118.68,25.37],
+			"三明市":[117.62,26.27],
+			"梅列区":[117.63,26.27],
+			"三元区":[117.6,26.23],
+			"明溪县":[117.2,26.37],
+			"清流县":[116.82,26.18],
+			"宁化县":[116.65,26.27],
+			"大田县":[117.85,25.7],
+			"尤溪县":[118.18,26.17],
+			"沙县":[117.78,26.4],
+			"将乐县":[117.47,26.73],
+			"泰宁县":[117.17,26.9],
+			"建宁县":[116.83,26.83],
+			"永安市":[117.37,25.98],
+			"泉州市":[118.67,24.88],
+			"鲤城区":[118.6,24.92],
+			"丰泽区":[118.6,24.92],
+			"洛江区":[118.67,24.95],
+			"泉港区":[118.88,25.12],
+			"惠安县":[118.8,25.03],
+			"安溪县":[118.18,25.07],
+			"永春县":[118.3,25.32],
+			"德化县":[118.23,25.5],
+			"金门县":[118.32,24.43],
+			"石狮市":[118.65,24.73],
+			"晋江市":[118.58,24.82],
+			"南安市":[118.38,24.97],
+			"漳州市":[117.65,24.52],
+			"芗城区":[117.65,24.52],
+			"龙文区":[117.72,24.52],
+			"云霄县":[117.33,23.95],
+			"漳浦县":[117.62,24.13],
+			"诏安县":[117.18,23.72],
+			"长泰县":[117.75,24.62],
+			"东山县":[117.43,23.7],
+			"南靖县":[117.37,24.52],
+			"平和县":[117.3,24.37],
+			"华安县":[117.53,25.02],
+			"龙海市":[117.82,24.45],
+			"南平市":[118.17,26.65],
+			"延平区":[118.17,26.65],
+			"顺昌县":[117.8,26.8],
+			"浦城县":[118.53,27.92],
+			"光泽县":[117.33,27.55],
+			"松溪县":[118.78,27.53],
+			"政和县":[118.85,27.37],
+			"邵武市":[117.48,27.37],
+			"武夷山市":[118.03,27.77],
+			"建瓯市":[118.32,27.03],
+			"建阳市":[118.12,27.33],
+			"龙岩市":[117.03,25.1],
+			"新罗区":[117.03,25.1],
+			"长汀县":[116.35,25.83],
+			"永定县":[116.73,24.72],
+			"上杭县":[116.42,25.05],
+			"武平县":[116.1,25.1],
+			"连城县":[116.75,25.72],
+			"漳平市":[117.42,25.3],
+			"宁德市":[119.52,26.67],
+			"蕉城区":[119.52,26.67],
+			"霞浦县":[120,26.88],
+			"古田县":[118.75,26.58],
+			"屏南县":[118.98,26.92],
+			"寿宁县":[119.5,27.47],
+			"周宁县":[119.33,27.12],
+			"柘荣县":[119.9,27.23],
+			"福安市":[119.65,27.08],
+			"福鼎市":[120.22,27.33]
+		};
+
+		var data = [
+			{name: "福州市", value: 9},
+			{name: "鼓楼区", value: 9},
+			{name: "台江区", value: 9},
+			{name: "仓山区", value: 9},
+			{name: "马尾区", value: 9},
+			{name: "晋安区", value: 9},
+			{name: "闽侯县", value: 9},
+			{name: "连江县", value: 9},
+			{name: "罗源县", value: 9},
+			{name: "闽清县", value: 9},
+			{name: "永泰县", value: 9},
+			{name: "平潭县", value: 9},
+			{name: "福清市", value: 9},
+			{name: "长乐市", value: 9},
+			{name: "厦门市", value: 9},
+			{name: "思明区", value: 9},
+			{name: "海沧区", value: 9},
+			{name: "湖里区", value: 9},
+			{name: "集美区", value: 9},
+			{name: "同安区", value: 9},
+			{name: "翔安区", value: 9},
+			{name: "莆田市", value: 9},
+			{name: "城厢区", value: 9},
+			{name: "涵江区", value: 9},
+			{name: "荔城区", value: 9},
+			{name: "秀屿区", value: 9},
+			{name: "仙游县", value: 9},
+			{name: "三明市", value: 9},
+			{name: "梅列区", value: 9},
+			{name: "三元区", value: 9},
+			{name: "明溪县", value: 9},
+			{name: "清流县", value: 9},
+			{name: "宁化县", value: 9},
+			{name: "大田县", value: 9},
+			{name: "尤溪县", value: 9},
+			{name: "沙县", value: 9},
+			{name: "将乐县", value: 9},
+			{name: "泰宁县", value: 9},
+			{name: "建宁县", value: 9},
+			{name: "永安市", value: 9},
+			{name: "泉州市", value: 9},
+			{name: "鲤城区", value: 9},
+			{name: "丰泽区", value: 9},
+			{name: "洛江区", value: 9},
+			{name: "泉港区", value: 9},
+			{name: "惠安县", value: 9},
+			{name: "安溪县", value: 9},
+			{name: "永春县", value: 9},
+			{name: "德化县", value: 9},
+			{name: "金门县", value: 9},
+			{name: "石狮市", value: 9},
+			{name: "晋江市", value: 9},
+			{name: "南安市", value: 9},
+			{name: "漳州市", value: 9},
+			{name: "芗城区", value: 9},
+			{name: "龙文区", value: 9},
+			{name: "云霄县", value: 9},
+			{name: "漳浦县", value: 9},
+			{name: "诏安县", value: 9},
+			{name: "长泰县", value: 9},
+			{name: "东山县", value: 9},
+			{name: "南靖县", value: 9},
+			{name: "平和县", value: 9},
+			{name: "华安县", value: 9},
+			{name: "龙海市", value: 9},
+			{name: "南平市", value: 9},
+			{name: "延平区", value: 9},
+			{name: "顺昌县", value: 9},
+			{name: "浦城县", value: 9},
+			{name: "光泽县", value: 9},
+			{name: "松溪县", value: 9},
+			{name: "政和县", value: 9},
+			{name: "邵武市", value: 9},
+			{name: "武夷山市", value: 9},
+			{name: "建瓯市", value: 9},
+			{name: "建阳市", value: 9},
+			{name: "龙岩市", value: 9},
+			{name: "新罗区", value: 9},
+			{name: "长汀县", value: 9},
+			{name: "永定县", value: 9},
+			{name: "上杭县", value: 9},
+			{name: "武平县", value: 9},
+			{name: "连城县", value: 9},
+			{name: "漳平市", value: 9},
+			{name: "宁德市", value: 9},
+			{name: "蕉城区", value: 9},
+			{name: "霞浦县", value: 9},
+			{name: "古田县", value: 9},
+			{name: "屏南县", value: 9},
+			{name: "寿宁县", value: 9},
+			{name: "周宁县", value: 9},
+			{name: "柘荣县", value: 9},
+			{name: "福安市", value: 9},
+			{name: "福鼎市", value: 9}
+		];
+
+		var convertData = function (data) {
+			var res = [];
+			for (var i = 0; i < data.length; i++) {
+				var geoCoord = geoCoordMap[data[i].name];
+				if (geoCoord) {
+					res.push({
+						name: data[i].name,
+						value: geoCoord.concat(Math.ceil(50+Math.random()*200))
+					});
+				}
+			}
+			return res;
+		};
+
+		var convertedData = [
+			convertData(data),
+			convertData(data.sort(function (a, b) {
+				return b.value - a.value;
+			}).slice(0, 6))
+		];
+
+
+		option = {
+			backgroundColor: '#404a59',
+			animation: true,
+			animationDuration: 1000,
+			animationEasing: 'cubicInOut',
+			animationDurationUpdate: 1000,
+			animationEasingUpdate: 'cubicInOut',
+			title: [
+				{
+					text: '福建省应急管理GIS展示平台',
+					left: 'center',
+					textStyle: {
+						color: '#fff',
+						fontSize: 32
+					},
+					z: 5
+				},
+				{
+					id: 'statistic',
+					right: 120,
+					top: 40,
+					width: 100,
+					textStyle: {
+						color: '#fff',
+						fontSize: 16
+					},
+					z: 5
+				}
+			],
+			toolbox: {
+				itemSize: 26,
+				iconStyle: {
+					normal: {
+						borderColor: '#fff'
+					},
+					emphasis: {
+						borderColor: '#b1e4ff'
+					}
+				}
+			},
+			brush: {
+				outOfBrush: {
+					color: '#abc'
+				},
+				brushStyle: {
+					borderWidth: 2,
+					color: 'rgba(0,0,0,0.2)',
+					borderColor: 'rgba(0,0,0,0.5)',
+				},
+				seriesIndex: [0, 1],
+				throttleType: 'debounce',
+				throttleDelay: 300,
+				geoIndex: 0
+			},
+			geo: {
+				map: 'fujian',
+				left: '10',
+				right: '35%',
+				center: [119.3,26.08],
+				zoom: 0.8,
+				label: {
+					emphasis: {
+						show: false
+					}
+				},
+				roam: true,
+				itemStyle: {
+					normal: {
+						areaColor: '#323c48',
+						borderColor: '#111'
+					},
+					emphasis: {
+						areaColor: '#2a333d'
+					}
+				}
+			},
+			tooltip : {
+				trigger: 'item',
+				formatter: function (params, ticket, callback) {
+					if (params.seriesType!='bar')
+						return params.name + ' : ' + params.value[2];
+					else
+						return params.name + ' : ' + params.value;
+				},
+				textStyle: {
+					fontSize: 24
+				}
+			},
+			grid: {
+				right: 40,
+				top: 130,
+				bottom: 40,
+				width: '30%'
+			},
+			xAxis: {
+				type: 'value',
+				scale: true,
+				position: 'top',
+				boundaryGap: false,
+				splitLine: {show: false},
+				axisLine: {show: false},
+				axisTick: {show: false},
+				axisLabel: {margin: 2, textStyle: {color: '#aaa', fontSize: 24}},
+			},
+			yAxis: {
+				type: 'category',
+				//name: 'TOP 20',
+				nameGap: 16,
+				axisLine: {show: false, lineStyle: {color: '#ddd'}},
+				axisTick: {show: false, lineStyle: {color: '#ddd'}},
+				axisLabel: {interval: 0, textStyle: {color: '#ddd', fontSize: 22}},
+				data: []
+			},
+			series : [
+				{
+					name: '应急事件',
+					type: 'effectScatter',
+					coordinateSystem: 'geo',
+					data: convertedData[0],
+					symbolSize: function (val) {
+						return Math.max(val[2] / 10, 8);
+					},
+					showEffectOn: 'render',
+					rippleEffect: {
+						brushType: 'stroke'
+					},
+					hoverAnimation: true,
+					label: {
+						normal: {
+							formatter: '{b}',
+							position: 'right', 
+							show: false
+						},
+						emphasis: {
+							show: true
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: '#f4e925',
+							shadowBlur: 10,
+							shadowColor: '#333',
+							fontSize: 24
+						}
+					},
+					zlevel: 1
+				},
+				{
+					name: 'Top 5',
+					type: 'effectScatter',
+					coordinateSystem: 'geo',
+					data: convertedData[1],
+					symbolSize: function (val) {
+						return Math.max(val[2] / 10, 8);
+					},
+					showEffectOn: 'emphasis',
+					rippleEffect: {
+						brushType: 'stroke'
+					},
+					hoverAnimation: true,
+					label: {
+						normal: {
+							formatter: '{b}',
+							position: 'right',
+							show: false,
+							fontSize: 24
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: '#f4e925',
+							shadowBlur: 10,
+							shadowColor: '#333'
+						}
+					},
+					zlevel: 1
+				},
+				{
+					id: 'bar',
+					zlevel: 2,
+					type: 'bar',
+					symbol: 'none',
+					itemStyle: {
+						normal: {
+							color: '#ddb926'
+						}
+					},
+					data: []
+				}
+			]
+		};
+
+
+		myChart.on('brushselected', renderBrushed);
+
+		myChart.setOption(option);
+
+		setTimeout(function () {
+			myChart.dispatchAction({
+				type: 'brush',
+				areas: [
+					{
+						geoIndex: 0,
+						brushType: 'polygon',
+						coordRange: [[119,27],[119,25],[117,25],[117,27]]
+					}
+				]
+			});
+		}, 0);
+
+
+		function renderBrushed(params) {
+			var mainSeries = params.batch[0].selected[0];
+
+			var selectedItems = [];
+			var categoryData = [];
+			var barData = [];
+			var maxBar = 20;
+			var sum = 0;
+			var count = 0;
+
+			for (var i = 0; i < mainSeries.dataIndex.length; i++) {
+				var rawIndex = mainSeries.dataIndex[i];
+				var dataItem = convertedData[0][rawIndex];
+				var pmValue = dataItem.value[2];
+
+				sum += pmValue;
+				count++;
+
+				selectedItems.push(dataItem);
+			}
+
+			selectedItems.sort(function (a, b) {
+				return a.value[2] - b.value[2];
+			});
+
+			for (i = 0; i < Math.min(selectedItems.length, maxBar); i++) {
+				categoryData.push(selectedItems[i].name);
+				barData.push(selectedItems[i].value[2]);
+			}
+
+			this.setOption({
+				yAxis: {
+					data: categoryData,
+					axisLabel: {
+					},
+				},
+				xAxis: {
+					axisLabel: {show: !!count}
+				},
+				title: {
+					id: 'statistic',
+					text: count ? 'TOP 20                      平均: ' + (sum / count).toFixed(0) + ' 件' : '',
+					textStyle: {fontSize: 28},
+					top: 60
+				},
+				series: {
+					id: 'bar',
+					data: barData
+				}
+			});
+		}
+	}); 
+}
+
+
+$(document).ready(function(){
+	 showEcharts();
+});  
+
+function onSearch() {
+	var myChart = echarts.init(document.getElementById('map'));
+	myChart.showLoading();
+	showEcharts();
+}
+
+</script>
+</head>
+
+<body>
+<div>
+    <input id="showHideRightPanel" class="showHideRightPanelChk" type="checkbox">
+    <div class="topPanel" style="background-color:#70afc4;">
+		<div class="col-md-12" style="margin-left:5px;height:40px;padding-top:4px;vertical-align:middle;">
+			<span style="font-size:18px;vertical-align:middle;"><b>事件类型：</b></span>
+			<select style="width:200px;height:24px;vertical-align:middle;">
+				<option value="1">恶劣气象</option>
+				<option value="2">交通事故</option>
+				<option value="3">火灾事故</option>
+				<option value="4">危化事故</option>
+				<option value="5">计划事件</option>
+				<option value="6">紧急事件</option>
+				<option value="7">其他事件</option>
+			</select>
+			<span style="margin-left:10px;font-size:18px;vertical-align:middle;"><b>年份：</b></span>
+			<select style="width:200px;height:24px;vertical-align:middle;">
+				<option value="2016">2016</option>
+				<option value ="2015">2015</option>
+				<option value ="2014">2014</option>
+				<option value ="2014">2013</option>
+			</select>
+			<span style="margin-left:10px;font-size:18px;vertical-align:middle;"><b>月份：</b></span>
+			<select style="width:200px;height:24px;vertical-align:middle;">
+				<option value ="Jan">1月</option>
+				<option value ="Feb">2月</option>
+				<option value="Mar">3月</option>
+				<option value="Apr">4月</option>
+				<option value="May">5月</option>
+				<option value="Jun">6月</option>
+				<option value="Jul">7月</option>
+				<option value="Aug">8月</option>
+				<option value="Sep">9月</option>
+				<option value="Oct">10月</option>
+				<option value="Nov">11月</option>
+				<option value="Dec">12月</option>
+			</select>
+			<button id="btn" style="margin-top:-2px;margin-left:10px;width:50px;height:30px;padding-top:4px;padding-left:11px;" class="btn btn-default" data-dismiss="modal" onclick="onSearch()">查询</button>
+		</div>
+    </div>
+    <div id="content" class="contentPanel" style="right:0px;">
+        <div id="map" style="height:100%;width:100%;"> </div>
+    </div>
+    <div id="split" class="splitPanel" style="display:none;">
+        <label for="showHideRightPanel" class="splitMark"></label>
+        <label id="splitBorder" for="showHideRightPanel" class="splitBorder" onclick="funcShowHideRightPanel()"></label>
+    </div>
+    <div id="right" class="rightPanel" style="display:none;">
+		<div class="pieChartTitle" id="title1"><b>桥梁类别</b></div>
+        <div id="pie1" style="height:35%;width:100%;"> </div>
+		<div class="pieChartTitle" style="top:2%;" id="title2"><b>桥梁等级</b></div>
+		<div id="pie2" style="height:35%;width:100%;position:relative;top:10px;"> </div>
+    </div>
+</div>
+</body>
+</html>

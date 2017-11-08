@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>GF大数据展示平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="js/bmap/jquery.min.js"></script>
+    <script src="js/bmap/echarts.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=FSzZET8GwDr3XqVa5f0TXXlG"></script>
+    <script src="js/bmap//bmap.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.js"></script>
+    <link rel="stylesheet" href="css/gis_main.css">
+    <link href="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.css" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" type="text/css" href="css/cloud-admin.css">
+    <link rel="stylesheet" type="text/css" href="css/themes/default.css" id="skin-switcher">
+    <link rel="stylesheet" type="text/css" href="css/responsive.css">
+
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- JQUERY UI-->
+    <link rel="stylesheet" type="text/css" href="js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.min.css" />
+    <!-- DATE RANGE PICKER -->
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+    <!-- DATA TABLES -->
+    <link rel="stylesheet" type="text/css" href="js/datatables/media/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="js/datatables/media/assets/css/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="js/datatables/extras/TableTools/media/css/TableTools.min.css" />
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .BMap_cpyCtrl
+        {
+            display:none;
+        }
+        .anchorBL{
+            display:none;
+        }
+    </style>
+</head>
+<body style="overflow:Scroll;overflow-y:hidden">
+<div>
+    <div id="content" class="contentPanel" style="background-color: white;right:32%;top:10px;">
+    	<div style="margin-top:20px;">
+        	<div class="col-md-4" style="height:850px;width:100%;">
+                <!-- BOX -->
+                <div class="box border purple" style="width: 100%">
+                    <div class="box-title" style="width: 100%;">
+                        <h4><i class="fa fa-bars"></i>GIS分析展示平台-国省道路况信息</h4>
+                    </div>
+                    <div id="bmap" class="box-body" style="height:850px;width:100%;"></div>
+                </div>
+                <!-- /BOX -->
+            </div>
+        </div>
+    </div>
+
+    <div id="right" class="rightPanel" style="background-color: white;top:10px;width:32%;border-left:0px;">
+        <div style="margin-top:20px;">
+            <div class="col-md-4" style="width:100%;">
+                <!-- BOX -->
+                <div class="box border primary" style="width: 492px">
+                    <div class="box-title" style="width: 100%;">
+                        <h4><i class="fa fa-bars"></i>数据资源管理平台-系统状态信息</h4>
+                    </div>
+                    <div class="box-body" style="width:490px;height: 400px;" id="pie1">
+                    </div>
+                </div>
+                <!-- /BOX -->
+            </div>
+
+            <div class="row" style="height: 400px;width: 100%;">
+                <div class="col-md-4">
+                    <!-- BOX -->
+                    <div class="box border blue">
+                        <div class="box-title" style="width: 100%;">
+                            <h4><i class="fa fa-bars"></i>综合分析辅助决策平台</h4>
+                        </div>
+                        <div class="box-body" style="width:490px;height: 350px;" id="pie2">
+                        </div>
+                    </div>
+                    <!-- /BOX -->
+                </div>
+            </div>
+        </div>
+        <!-- <div class="pieChartTitle" id="title1"><b>系统状态监测</b></div>
+        <div id="pie1" style="height:35%;width:100%;"> </div> -->
+        <!-- <div id="pie2" style="height:35%;width:100%;position:relative;top:10px;"> </div> -->
+    </div>
+</div>
+<!--div id="mapid" style="height:900px;width:100%;"> </div-->
+<script>
+    var mapCenter = [118.0539,25.990354];
+    var myColor = ['#33DFEF', '#3B8CFF', '#7FA7D8','#5FAD75','#a5d0bc','#79C0E8'];
+    var mapZoom = 9;
+    var isInitialize = false;
+    var map = null;
+    var year=2015;
+    $(document).ready(function(){
+        showEcharts();
+    });
+
+    function showEcharts() {
+        var myChartPie1 = echarts.init(document.getElementById('pie1'));
+        option2 = {
+            tooltip: {
+                trigger: 'axis',
+                textStyle: {
+                    fontSize: 22
+                },
+            },
+            legend: {
+                data:['服务器访问量', '在线人数','转换任务执行数'],
+                textStyle: {
+                    color: '#222',
+
+                    fontSize: 18,
+
+
+                },
+            },
+            grid: {
+                left: '2%',
+                right: '2%',
+                top:'23%',
+                bottom: '3%',
+                containLabel: true
+            },
+
+
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: true,
+                    nameTextStyle: {
+                        color: '#222',
+                        fontSize: 18,
+                    },
+
+                    data: (function (){
+                        var now = new Date();
+                        var res = [];
+                        var len = 10;
+                        while (len--) {
+                            res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+                            now = new Date(now - 100);
+                        }
+                        return res;
+                    })()
+                },
+
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    scale: true,
+                    name: '人数',
+                    nameTextStyle: {
+                        color: '#222',
+                        fontSize: 18
+                    },
+                    splitLine: {
+                        show: false,
+                        interval: 'auto',
+                        //lineStyle: {...},
+                    },
+
+                    max: 20,
+                    min: 0,
+                    boundaryGap: [0.2, 0.2]
+                },
+                {
+                    type: 'value',
+                    scale: true,
+                    splitLine: {
+                        show: false,
+                        interval: 'auto',
+                        //lineStyle: {...},
+                    },
+                    name: '条',
+                    nameTextStyle: {
+                        color: '#222',
+                        fontSize: 18
+                    },
+                    max: 1200,
+                    min: 0,
+                    boundaryGap: [0.2, 0.2]
+                }
+            ],
+            series: [
+                {
+                    name:'转换任务执行数',
+                    type:'line',
+                    xAxisIndex: 0,
+                    yAxisIndex: 1,
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: false,
+                    lineStyle: {
+                        normal: {
+                            width: 1
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(137, 189, 27, 0.3)'
+                            }, {
+                                offset: 0.8,
+                                color: 'rgba(137, 189, 27, 0)'
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: 'rgb(137,189,27)',
+                            borderColor: 'rgba(137,189,2,0.27)',
+                            borderWidth: 12
+
+                        }
+                    },
+                    data:(function (){
+                        var res = [];
+                        var len = 0;
+                        while (len < 10) {
+                            res.push(Math.ceil(Math.random()*1000+20));
+                            len++;
+                        }
+                        return res;
+                    })()
+                },
+
+                {
+                    name:'在线人数',
+                    type:'line',
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: false,
+                    lineStyle: {
+                        normal: {
+                            width: 1
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(0, 136, 212, 0.3)'
+                            }, {
+                                offset: 0.8,
+                                color: 'rgba(0, 136, 212, 0)'
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: 'rgb(0,136,212)',
+                            borderColor: 'rgba(0,136,212,0.2)',
+                            borderWidth: 12
+
+                        }
+                    },
+                    data:(function (){
+                        var res = [];
+                        var len = 0;
+                        while (len < 10) {
+                            res.push((Math.ceil(Math.random()*10) + 5));
+                            len++;
+                        }
+                        return res;
+                    })()
+                },
+                {
+                    name:'服务器访问量',
+                    type:'line',
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: false,
+                    lineStyle: {
+                        normal: {
+                            width: 1
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(219, 50, 51, 0.3)'
+                            }, {
+                                offset: 0.8,
+                                color: 'rgba(219, 50, 51, 0)'
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+
+                            color: 'rgb(219,50,51)',
+                            borderColor: 'rgba(219,50,51,0.2)',
+                            borderWidth: 12
+                        }
+                    },
+                    data:(function (){
+                        var res = [];
+                        var len = 0;
+                        while (len < 10) {
+                            res.push(Math.ceil(Math.random()*10) + 5);
+                            len++;
+                        }
+                        return res;
+                    })()
+                }
+            ]
+        };
+        myChartPie1.setOption(option2);
+
+        var myChartPie2 = echarts.init(document.getElementById('pie2'));
+        var option1 = {
+            // color: myColor,
+            title: [{
+                left: 'center',
+                text: '2016公路建设投资类型',
+                textStyle: {
+                    //fontWeight: normal,
+                    fontSize: 22,
+                },
+            }],
+            tooltip: {
+                textStyle: {
+                    fontSize: 22
+                },
+            },
+            series: [
+                {
+                    name:'面积模式',
+                    type:'pie',
+                    radius : [40, 100],
+                    center : ['50%', '60%'],
+                    label:{
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 18,
+                                color: 'black'
+                            }
+                        }
+                    },
+                    /*     roseType : 'area',
+                     x: '50%',               // for funnel
+                     max: 40,                // for funnel
+                     sort : 'ascending',   // for funnel */
+                    data:[
+                        {value:Math.round(Math.random() * 1000), name:'路面改造' },
+                        {value:Math.round(Math.random() * 1000), name:'国省道建设'},
+                        {value:Math.round(Math.random() * 1000), name:'农村路网'},
+                        {value:Math.round(Math.random() * 1000), name:'其他项目'},
+                        {value:Math.round(Math.random() * 1000), name:'危桥改造'},
+                        {value:Math.round(Math.random() * 1000), name:'撤渡建桥'}
+
+                    ]
+                }
+            ]
+        };
+        myChartPie2.setOption(option1);
+        setInterval(function (){
+            axisData = (new Date()).toLocaleTimeString().replace(/^\D*/,'');
+            var data0 = option2.series[0].data;
+            var data1 = option2.series[1].data;
+            var data2 = option2.series[2].data;
+            data0.shift();
+            data0.push(Math.round(Math.random() * 1000));
+            data2.shift();
+            data2.push(Math.ceil(Math.random()*10) + 5);
+            data1.shift();
+            data1.push(Math.ceil(Math.random()*10) + 5);
+
+            option2.xAxis[0].data.shift();
+            option2.xAxis[0].data.push(axisData);
+            /* option2.xAxis[1].data.shift();
+             option2.xAxis[1].data.push(axisData);
+             */
+            myChartPie1.setOption(option2);
+        }, 900);
+        setInterval(function (){
+            if(year==2015){
+                option1.title[0].text= '2016年养护工程投资类型';
+                option1.series[0].data=[
+                    {value:Math.round(Math.random() * 1000), name:'绿化工程'},
+                    {value:Math.round(Math.random() * 1000), name:'环保工程'},
+                    {value:Math.round(Math.random() * 1000), name:'安保工程'},
+                    {value:Math.round(Math.random() * 1000), name:'集镇整治'},
+                    {value:Math.round(Math.random() * 1000), name:'其它整治'}
+                ];
+
+            }
+            if(year==2014){
+                option1.title[0].text= '2016年路网事件原因信息';
+                option1.series[0].data=[
+                    {value:Math.round(Math.random() * 1000), name:'计划性养护施工'},
+                    {value:Math.round(Math.random() * 1000), name:'交通事故'},
+                    {value:Math.round(Math.random() * 1000), name:'自然灾害'},
+                    {value:Math.round(Math.random() * 1000), name:'其他事件'}
+
+                ];
+
+            }
+            if(year==2013){
+                option1.title[0].text= '2016年路网通行事件';
+                option1.series[0].data=[
+                    {value:Math.round(Math.random() * 1000), name:'日常事件'},
+                    {value:Math.round(Math.random() * 1000), name:'阻塞封闭事件'},
+                    {value:Math.round(Math.random() * 1000), name:'限行事件'},
+                    {value:Math.round(Math.random() * 1000), name:'轻微影响事件'}
+
+                ];
+
+            };
+            if(year==2012){
+                option1.title[0].text= '2016年公路建设投资类型';
+                option1.series[0].data=[
+                    {value:Math.round(Math.random() * 1000), name:'路面改造'},
+                    {value:Math.round(Math.random() * 1000), name:'国省道建设'},
+                    {value:Math.round(Math.random() * 1000), name:'农村路网'},
+                    {value:Math.round(Math.random() * 1000), name:'其他投资'},
+                    {value:Math.round(Math.random() * 1000), name:'危桥改造'},
+                    {value:Math.round(Math.random() * 1000), name:'撤渡建桥'}
+
+                ];
+
+            }
+            year=year-1;
+            if(year==2011)
+                year=2016;
+
+            myChartPie2.setOption(option1);
+        }, 2500);
+        var myChartMap = echarts.init(document.getElementById('bmap'));
+        myChartMap.title = '北京公交路线 - 线特效';
+        $.get('data/guo_shengdao_bmap.json', function(data) {
+            var hStep = 300 / (data.length - 1);
+            var busLines = [].concat.apply([], data.map(function (busLine, idx) {
+                var points = [];
+                for (var i = 0; i < busLine.length; i += 1) {
+                    points.push(busLine[i]["coord"]);
+                }
+                return {
+                    coords: points,
+                    lineStyle: {
+                        normal: {
+                            color: echarts.color.modifyHSL('#5A94DF', Math.round(hStep * idx))
+                        }
+                    }
+                };
+            }));
+            myChartMap.setOption(option = {
+                bmap: {
+                    center: mapCenter,
+                    zoom: mapZoom,
+                    roam: true,
+                    mapStyle: {
+                        styleJson: [{
+                            'featureType': 'water',
+                            'elementType': 'all',
+                            'stylers': {
+                                'color': '#d1d1d1'
+                            }
+                        }, {
+                            'featureType': 'land',
+                            'elementType': 'all',
+                            'stylers': {
+                                'color': '#f3f3f3'
+                            }
+                        }, {
+                            'featureType': 'railway',
+                            'elementType': 'all',
+                            'stylers': {
+                                'visibility': 'off'
+                            }
+                        }, {
+                            'featureType': 'highway',
+                            'elementType': 'all',
+                            'stylers': {
+                                'color': '#fdfdfd'
+                            }
+                        }, {
+                            'featureType': 'highway',
+                            'elementType': 'labels',
+                            'stylers': {
+                                'visibility': 'off'
+                            }
+                        }, {
+                            'featureType': 'arterial',
+                            'elementType': 'geometry',
+                            'stylers': {
+                                'color': '#fefefe'
+                            }
+                        }, {
+                            'featureType': 'arterial',
+                            'elementType': 'geometry.fill',
+                            'stylers': {
+                                'color': '#fefefe'
+                            }
+                        }, {
+                            'featureType': 'poi',
+                            'elementType': 'all',
+                            'stylers': {
+                                'visibility': 'off'
+                            }
+                        }, {
+                            'featureType': 'green',
+                            'elementType': 'all',
+                            'stylers': {
+                                'visibility': 'off'
+                            }
+                        }, {
+                            'featureType': 'subway',
+                            'elementType': 'all',
+                            'stylers': {
+                                'visibility': 'off'
+                            }
+                        }, {
+                            'featureType': 'manmade',
+                            'elementType': 'all',
+                            'stylers': {
+                                'color': '#d1d1d1'
+                            }
+                        }, {
+                            'featureType': 'local',
+                            'elementType': 'all',
+                            'stylers': {
+                                'color': '#d1d1d1'
+                            }
+                        }, {
+                            'featureType': 'arterial',
+                            'elementType': 'labels',
+                            'stylers': {
+                                'visibility': 'off'
+                            }
+                        }, {
+                            'featureType': 'boundary',
+                            'elementType': 'all',
+                            'stylers': {
+                                'color': '#fefefe'
+                            }
+                        }, {
+                            'featureType': 'building',
+                            'elementType': 'all',
+                            'stylers': {
+                                'color': '#d1d1d1'
+                            }
+                        }, {
+                            'featureType': 'label',
+                            'elementType': 'labels.text.fill',
+                            'stylers': {
+                                'color': '#000000'
+                            }
+                        }]
+                    }
+                },
+                series: [{
+                    type: 'lines',
+                    coordinateSystem: 'bmap',
+                    polyline: true,
+                    data: busLines,
+                    silent: true,
+                    lineStyle: {
+                        normal: {
+                            // color: '#c23531',
+                            // color: 'rgb(200, 35, 45)',
+                            opacity: 0.4,
+                            width: 5
+                        }
+                    },
+                    progressiveThreshold: 500,
+                    progressive: 200
+                }, {
+                    type: 'lines',
+                    coordinateSystem: 'bmap',
+                    polyline: true,
+                    data: busLines,
+                    lineStyle: {
+                        normal: {
+                            width: 0
+                        }
+                    },
+                    effect: {
+                        //constantSpeed: 20,
+                        show: true,
+                        trailLength: 0.1,
+                        symbolSize: 4,
+                        animationDurationUpdate : function (idx) {
+                            // 越往后的数据延迟越大
+                            return idx * 100;
+                        }
+                    },
+                    zlevel: 1
+                }]
+            });
+        });
+    }
+
+    var hideORshow = 0;
+    function funcShowHideRightPanel() {
+        var myPieChart1 = echarts.getInstanceByDom(document.getElementById('pie1'));
+        var myPieChart2 = echarts.getInstanceByDom(document.getElementById('pie2'));
+        if (hideORshow == 0){
+            $("#showHideRightPanel").get(0).checked = false;
+            $('#content').attr('style', 'right:0px;');
+            $("#bmap").width($('#content').width());
+            $("#pie1").width($("#right").width());
+            $("#pie2").width($("#right").width());
+            UpdateWindow();
+            hideORshow = 1;
+        }else{
+            $("#showHideRightPanel").get(0).checked = true;
+            $('#content').attr('style', 'right:20%;');
+            $("#bmap").width($("#content").width());
+            $("#bmap").height($("#content").height());
+            $("#pie1").width($("#right").width());
+            $("#pie1").height($("#right").height()*0.35);
+            $("#pie2").width($("#right").width());
+            $("#pie2").height($("#right").height()*0.35);
+            UpdateWindow();
+            hideORshow = 0;
+        }
+    }
+
+    function UpdateWindow() {
+        var myPieChart1 = echarts.getInstanceByDom(document.getElementById('pie1'));
+        var myPieChart2 = echarts.getInstanceByDom(document.getElementById('pie2'));
+        var content = document.getElementById("content");
+        var bmap = document.getElementById("bmap");
+        mapCenter = map.getCenter();
+        mapZoom = map.getZoom();
+
+        echarts.dispose(myPieChart1);
+        echarts.dispose(myPieChart2);
+        content.removeChild(bmap);
+
+        var mapdiv=document.createElement("div");
+        mapdiv.setAttribute('id', 'bmap');
+        mapdiv.setAttribute('style', 'height:100%;width:100%;');
+        content.appendChild(mapdiv);
+        showEcharts();
+    }
+</script>
+</body>
+</html>

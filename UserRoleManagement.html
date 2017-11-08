@@ -1,0 +1,1313 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>用户角色管理</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<!-- STYLESHEETS -->
+		<!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+		<link rel="stylesheet" type="text/css" href="css/cloud-admin.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/default.css" id="skin-switcher">
+		<link rel="stylesheet" type="text/css" href="css/responsive.css">
+
+		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<!-- JQUERY UI-->
+		<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.min.css" />
+		<!-- DATE RANGE PICKER -->
+		<link rel="stylesheet" type="text/css" href="js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+		<!-- DATA TABLES -->
+		<link rel="stylesheet" type="text/css" href="js/datatables/media/css/jquery.dataTables.min.css" />
+		<link rel="stylesheet" type="text/css" href="js/datatables/media/assets/css/datatables.min.css" />
+		<link rel="stylesheet" type="text/css" href="js/datatables/extras/TableTools/media/css/TableTools.min.css" />
+		<!-- FONTS -->
+		<style>
+			.modal-dialog {
+				margin-top: -500px;
+			}
+			
+			body {
+				overflow-x: hidden;
+				overflow-y: hidden;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- HEADER -->
+		<header class="navbar clearfix" id="header">
+			<div class="container">
+				<div class="navbar-brand">
+					<!-- COMPANY LOGO -->
+					<a href="index.html">
+						<img src="img/logo/logo.png" alt="Cloud Admin Logo" class="img-responsive" height="30" width="120">
+					</a>
+					<!-- /COMPANY LOGO -->
+					<!-- TEAM STATUS FOR MOBILE -->
+					<div class="visible-xs">
+						<a href="#" class="team-status-toggle switcher btn dropdown-toggle">
+							<i class="fa fa-users"></i>
+						</a>
+					</div>
+					<!-- /TEAM STATUS FOR MOBILE -->
+					<!-- SIDEBAR COLLAPSE -->
+					<div id="sidebar-collapse" class="sidebar-collapse btn">
+						<i class="fa fa-bars" data-icon1="fa fa-bars" data-icon2="fa fa-bars"></i>
+					</div>
+					<!-- /SIDEBAR COLLAPSE -->
+				</div>
+				<!-- NAVBAR LEFT -->
+				<ul class="nav navbar-nav pull-left hidden-xs" id="navbar-left">
+					<li class="dropdown">
+						<a href="#" class="team-status-toggle dropdown-toggle tip-bottom" data-toggle="tooltip" title="获取服务器状态">
+							<i class="fa fa-archive fa-fw"></i>
+							<span class="name">服务器状态</span>
+							<i class="fa fa-angle-down"></i>
+						</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="fa fa-cog"></i>
+							<span class="name">皮肤</span>
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<ul class="dropdown-menu skins">
+							<li class="dropdown-title">
+								<span><i class="fa fa-leaf"></i>主题皮肤</span>
+							</li>
+							<li>
+								<a href="#" data-skin="default">默认</a>
+							</li>
+							<li>
+								<a href="#" data-skin="night">暗影</a>
+							</li>
+							<li>
+								<a href="#" data-skin="earth">大地</a>
+							</li>
+							<li>
+								<a href="#" data-skin="utopia">乌托邦</a>
+							</li>
+							<li>
+								<a href="#" data-skin="nature">自然</a>
+							</li>
+							<li>
+								<a href="#" data-skin="graphite">石墨</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<!-- /NAVBAR LEFT -->
+				<!-- BEGIN TOP NAVIGATION MENU -->
+				<ul class="nav navbar-nav pull-right">
+					<!-- BEGIN NOTIFICATION DROPDOWN -->
+					<li class="dropdown" id="header-notification">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="fa fa-bell"></i>
+							<span class="badge">7</span>
+						</a>
+						<ul class="dropdown-menu notification">
+							<li class="dropdown-title">
+								<span><i class="fa fa-bell"></i>您当前有4份通知</span>
+							</li>
+							<li>
+								<a href="#">
+									<span class="label label-success"><i class="fa fa-user"></i></span>
+									<span class="body">
+                                        <span class="message">当前3位用户在线 </span>
+									<span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>刚刚</span>
+									</span>
+									</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<span class="label label-primary"><i class="fa fa-comment"></i></span>
+									<span class="body">
+                                        <span class="message">赵广提交ETL任务</span>
+									<span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>19分钟前</span>
+									</span>
+									</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<span class="label label-warning"><i class="fa fa-lock"></i></span>
+									<span class="body">
+                                        <span class="message">DW1 服务器锁定</span>
+									<span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>32分钟前</span>
+									</span>
+									</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<span class="label label-warning"><i class="fa fa-exclamation-triangle"></i></span>
+									<span class="body">
+                                        <span class="message">Oracle11g 连接超时</span>
+									<span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>6 小时前</span>
+									</span>
+									</span>
+								</a>
+							</li>
+							<li class="footer">
+								<a href="#">详情 <i class="fa fa-arrow-circle-right"></i></a>
+							</li>
+						</ul>
+					</li>
+					<!-- END NOTIFICATION DROPDOWN -->
+					<!-- BEGIN INBOX DROPDOWN -->
+					<li class="dropdown" id="header-message">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="fa fa-envelope"></i>
+							<span class="badge">3</span>
+						</a>
+						<ul class="dropdown-menu inbox">
+							<li class="dropdown-title">
+								<span><i class="fa fa-envelope-o"></i>您有3条未读信息</span>
+								<span class="compose pull-right tip-right" title="编辑信息"><i class="fa fa-pencil-square-o"></i></span>
+							</li>
+							<li>
+								<a href="#">
+									<img src="img/avatars/1.jpg" alt="" />
+									<span class="body">
+                                        <span class="from">刘丹</span>
+									<span class="message">
+                                        </span>
+									<span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>刚刚</span>
+									</span>
+									</span>
+
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<img src="img/avatars/dengyuqiao.jpg" alt="" />
+									<span class="body">
+                                        <span class="from">邓钰桥</span>
+									<span class="message">
+                                        </span>
+									<span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>15分钟前</span>
+									</span>
+									</span>
+
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<img src="img/avatars/guochangqing.jpg" alt="" />
+									<span class="body">
+                                        <span class="from">郭长青</span>
+									<span class="message">
+                                        </span>
+									<span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>2小时前</span>
+									</span>
+									</span>
+
+								</a>
+							</li>
+							<li class="footer">
+								<a href="#">查看消息详情 <i class="fa fa-arrow-circle-right"></i></a>
+							</li>
+						</ul>
+					</li>
+					<!-- END INBOX DROPDOWN -->
+					<!-- BEGIN TODO DROPDOWN -->
+					<li class="dropdown" id="header-tasks">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="fa fa-tasks"></i>
+							<span class="badge">3</span>
+						</a>
+						<ul class="dropdown-menu tasks">
+							<li class="dropdown-title">
+								<span><i class="fa fa-check"></i> 6份任务进程中</span>
+							</li>
+							<li>
+								<a href="#">
+									<span class="header clearfix">
+                                        <span class="pull-left">数据库日常更新</span>
+									<span class="pull-right">60%</span>
+									</span>
+									<div class="progress">
+										<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+											<span class="sr-only">60% Complete</span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<span class="header clearfix">
+                                        <span class="pull-left">账户安全系统升级中</span>
+									<span class="pull-right">25%</span>
+									</span>
+									<div class="progress">
+										<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+											<span class="sr-only">25% Complete</span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<span class="header clearfix">
+                                        <span class="pull-left">数据抽取任务12</span>
+									<span class="pull-right">40%</span>
+									</span>
+									<div class="progress progress-striped">
+										<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+											<span class="sr-only">40% Complete</span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<span class="header clearfix">
+                                        <span class="pull-left">数据抽取任务13</span>
+									<span class="pull-right">70%</span>
+									</span>
+									<div class="progress progress-striped active">
+										<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">
+											<span class="sr-only">70% Complete</span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<span class="header clearfix">
+                                        <span class="pull-left">调度计划7</span>
+									<span class="pull-right">65%</span>
+									</span>
+									<div class="progress">
+										<div class="progress-bar progress-bar-success" style="width: 35%">
+											<span class="sr-only">35% Complete (success)</span>
+										</div>
+										<div class="progress-bar progress-bar-warning" style="width: 20%">
+											<span class="sr-only">20% Complete (warning)</span>
+										</div>
+										<div class="progress-bar progress-bar-danger" style="width: 10%">
+											<span class="sr-only">10% Complete (danger)</span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li class="footer">
+								<a href="#">查看所有任务<i class="fa fa-arrow-circle-right"></i></a>
+							</li>
+						</ul>
+					</li>
+					<!-- END TODO DROPDOWN -->
+					<!-- BEGIN USER LOGIN DROPDOWN -->
+					<li class="dropdown user" id="header-user">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<img alt="" src="img/avatars/zhangwei.jpg" />
+							<span class="username">张伟</span>
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#"><i class="fa fa-user"></i>头像设置</a>
+							</li>
+							<li>
+								<a href="#"><i class="fa fa-cog"></i> 账户设置</a>
+							</li>
+							<li>
+								<a href="#"><i class="fa fa-eye"></i> 隐私设置</a>
+							</li>
+							<li>
+								<a href="login.html"><i class="fa fa-power-off"></i> 登出</a>
+							</li>
+						</ul>
+					</li>
+					<!-- END USER LOGIN DROPDOWN -->
+				</ul>
+				<!-- END TOP NAVIGATION MENU -->
+			</div>
+			<!-- TEAM STATUS -->
+			<div class="container team-status" id="team-status">
+				<div id="scrollbar">
+					<div class="handle">
+					</div>
+				</div>
+				<div id="teamslider">
+					<ul class="team-list">
+						<li class="current">
+							<a href="javascript:void(0);">
+								<span class="image">
+                      <img src="img/avatars/zhangwei.jpg" alt="" />
+                  </span>
+								<span class="title">
+                    你
+                  </span>
+								<div class="progress">
+									<div class="progress-bar progress-bar-success" style="width: 35%">
+										<span class="sr-only">35% Complete (success)</span>
+									</div>
+									<div class="progress-bar progress-bar-warning" style="width: 20%">
+										<span class="sr-only">20% Complete (warning)</span>
+									</div>
+									<div class="progress-bar progress-bar-danger" style="width: 10%">
+										<span class="sr-only">10% Complete (danger)</span>
+									</div>
+								</div>
+								<span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">6</span>已完成
+								<span class="pull-right fa fa-check"></span>
+				</div>
+				<div class="field">
+					<span class="badge badge-orange">3</span>进程中
+					<span class="pull-right fa fa-adjust"></span>
+				</div>
+				<div class="field">
+					<span class="badge badge-red">1</span> 待定
+					<span class="pull-right fa fa-list-ul"></span>
+				</div>
+				</span>
+				</a>
+				</li>
+				<li>
+					<a href="javascript:void(0);">
+						<span class="image">
+                      <img src="img/avatars/xinghui.jpg" alt="" />
+                  </span>
+						<span class="title">
+                    邢辉
+                  </span>
+						<div class="progress">
+							<div class="progress-bar progress-bar-success" style="width: 15%">
+								<span class="sr-only">35% Complete (success)</span>
+							</div>
+							<div class="progress-bar progress-bar-warning" style="width: 40%">
+								<span class="sr-only">20% Complete (warning)</span>
+							</div>
+							<div class="progress-bar progress-bar-danger" style="width: 20%">
+								<span class="sr-only">10% Complete (danger)</span>
+							</div>
+						</div>
+						<span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">2</span> 已完成
+						<span class="pull-right fa fa-check"></span>
+			</div>
+			<div class="field">
+				<span class="badge badge-orange">8</span> 进程中
+				<span class="pull-right fa fa-adjust"></span>
+			</div>
+			<div class="field">
+				<span class="badge badge-red">4</span> 待定
+				<span class="pull-right fa fa-list-ul"></span>
+			</div>
+			</span>
+			</a>
+			</li>
+			<li>
+				<a href="javascript:void(0);">
+					<span class="image">
+                      <img src="img/avatars/zhangjinhai.jpg" alt="" />
+                  </span>
+					<span class="title">
+                    张金海
+                  </span>
+					<div class="progress">
+						<div class="progress-bar progress-bar-success" style="width: 65%">
+							<span class="sr-only">35% Complete (success)</span>
+						</div>
+						<div class="progress-bar progress-bar-warning" style="width: 10%">
+							<span class="sr-only">20% Complete (warning)</span>
+						</div>
+						<div class="progress-bar progress-bar-danger" style="width: 15%">
+							<span class="sr-only">10% Complete (danger)</span>
+						</div>
+					</div>
+					<span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">10</span> 已完成
+					<span class="pull-right fa fa-check"></span>
+					</div>
+					<div class="field">
+						<span class="badge badge-orange">3</span> 进程中
+						<span class="pull-right fa fa-adjust"></span>
+					</div>
+					<div class="field">
+						<span class="badge badge-red">4</span> 待定
+						<span class="pull-right fa fa-list-ul"></span>
+					</div>
+					</span>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:void(0);">
+					<span class="image">
+                      <img src="img/avatars/zhaoguang.jpg" alt="" />
+                  </span>
+					<span class="title">
+                    赵广
+                  </span>
+					<div class="progress">
+						<div class="progress-bar progress-bar-success" style="width: 5%">
+							<span class="sr-only">35% Complete (success)</span>
+						</div>
+						<div class="progress-bar progress-bar-warning" style="width: 48%">
+							<span class="sr-only">20% Complete (warning)</span>
+						</div>
+						<div class="progress-bar progress-bar-danger" style="width: 27%">
+							<span class="sr-only">10% Complete (danger)</span>
+						</div>
+					</div>
+					<span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">1</span> 已完成
+					<span class="pull-right fa fa-check"></span>
+					</div>
+					<div class="field">
+						<span class="badge badge-orange">6</span> 进程中
+						<span class="pull-right fa fa-adjust"></span>
+					</div>
+					<div class="field">
+						<span class="badge badge-red">2</span> 待定
+						<span class="pull-right fa fa-list-ul"></span>
+					</div>
+					</span>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:void(0);">
+					<span class="image">
+                      <img src="img/avatars/dengyuqiao.jpg" alt="" />
+                  </span>
+					<span class="title">
+                    邓钰桥
+                  </span>
+					<div class="progress">
+						<div class="progress-bar progress-bar-success" style="width: 21%">
+							<span class="sr-only">35% Complete (success)</span>
+						</div>
+						<div class="progress-bar progress-bar-warning" style="width: 20%">
+							<span class="sr-only">20% Complete (warning)</span>
+						</div>
+						<div class="progress-bar progress-bar-danger" style="width: 40%">
+							<span class="sr-only">10% Complete (danger)</span>
+						</div>
+					</div>
+					<span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">4</span> 已完成
+					<span class="pull-right fa fa-check"></span>
+					</div>
+					<div class="field">
+						<span class="badge badge-orange">5</span> 进程中
+						<span class="pull-right fa fa-adjust"></span>
+					</div>
+					<div class="field">
+						<span class="badge badge-red">9</span> 待定
+						<span class="pull-right fa fa-list-ul"></span>
+					</div>
+					</span>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:void(0);">
+					<span class="image">
+                      <img src="img/avatars/guochangqing.jpg" alt="" />
+                  </span>
+					<span class="title">
+                    郭长青
+                  </span>
+					<div class="progress">
+						<div class="progress-bar progress-bar-success" style="width: 45%">
+							<span class="sr-only">35% Complete (success)</span>
+						</div>
+						<div class="progress-bar progress-bar-warning" style="width: 21%">
+							<span class="sr-only">20% Complete (warning)</span>
+						</div>
+						<div class="progress-bar progress-bar-danger" style="width: 10%">
+							<span class="sr-only">10% Complete (danger)</span>
+						</div>
+					</div>
+					<span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">6</span> 已完成
+					<span class="pull-right fa fa-check"></span>
+					</div>
+					<div class="field">
+						<span class="badge badge-orange">3</span> 进程中
+						<span class="pull-right fa fa-adjust"></span>
+					</div>
+					<div class="field">
+						<span class="badge badge-red">1</span> 待定
+						<span class="pull-right fa fa-list-ul"></span>
+					</div>
+					</span>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:void(0);">
+					<span class="image">
+                      <img src="img/avatars/wangqianwei.jpg" alt="" />
+                  </span>
+					<span class="title">
+                    王前炜
+                  </span>
+					<div class="progress">
+						<div class="progress-bar progress-bar-success" style="width: 7%">
+							<span class="sr-only">35% Complete (success)</span>
+						</div>
+						<div class="progress-bar progress-bar-warning" style="width: 30%">
+							<span class="sr-only">20% Complete (warning)</span>
+						</div>
+						<div class="progress-bar progress-bar-danger" style="width: 10%">
+							<span class="sr-only">10% Complete (danger)</span>
+						</div>
+					</div>
+					<span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">1</span> 已完成
+					<span class="pull-right fa fa-check"></span>
+					</div>
+					<div class="field">
+						<span class="badge badge-orange">6</span> 进程中
+						<span class="pull-right fa fa-adjust"></span>
+					</div>
+					<div class="field">
+						<span class="badge badge-red">2</span> 待定
+						<span class="pull-right fa fa-list-ul"></span>
+					</div>
+					</span>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:void(0);">
+					<span class="image">
+                      <img src="img/avatars/avatar8.jpg" alt="" />
+                  </span>
+					<span class="title">
+                    邢辉
+                  </span>
+					<div class="progress">
+						<div class="progress-bar progress-bar-success" style="width: 70%">
+							<span class="sr-only">35% Complete (success)</span>
+						</div>
+						<div class="progress-bar progress-bar-warning" style="width: 20%">
+							<span class="sr-only">20% Complete (warning)</span>
+						</div>
+						<div class="progress-bar progress-bar-danger" style="width: 5%">
+							<span class="sr-only">10% Complete (danger)</span>
+						</div>
+					</div>
+					<span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">13</span> 已完成
+					<span class="pull-right fa fa-check"></span>
+					</div>
+					<div class="field">
+						<span class="badge badge-orange">7</span> 进程中
+						<span class="pull-right fa fa-adjust"></span>
+					</div>
+					<div class="field">
+						<span class="badge badge-red">1</span> 待定
+						<span class="pull-right fa fa-list-ul"></span>
+					</div>
+					</span>
+				</a>
+			</li>
+			</ul>
+			</div>
+			</div>
+			<!-- /TEAM STATUS -->
+		</header>
+		<!--/HEADER -->
+		<!-- PAGE -->
+		<section id="page">
+			<!-- SIDEBAR -->
+			<div id="sidebar" class="sidebar" style="height: 973px;">
+				<div class="sidebar-menu nav-collapse">
+					<div class="divide-20"></div>
+					<!-- SEARCH BAR -->
+					<div id="search-bar">
+						<input class="search" type="text" placeholder="搜索"><i class="fa fa-search search-icon"></i>
+					</div>
+					<!-- /SEARCH BAR -->
+
+					<!-- SIDEBAR QUICK-LAUNCH -->
+					<!-- <div id="quicklaunch">
+                        <!-- /SIDEBAR QUICK-LAUNCH -->
+
+					<!-- SIDEBAR MENU -->
+					<ul>
+						<li class="">
+							<a href="index.html">
+								<i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">主页</span>
+								<span class="selected"></span>
+							</a>
+						</li>
+						<li class="has-sub">
+							<a href="DataResourceManagementPlatform.html" class="">
+								<i class="fa fa-certificate fa-fw"></i> <span class="menu-text">数据资源管理平台</span>
+								<span class="arrow"></span>
+							</a>
+							<ul class="sub">
+								<li class="has-sub-sub">
+									<a href="javascript:;" class=""><span class="sub-menu-text">数据监控管理系统</span>
+										<span class="arrow"></span>
+									</a>
+									<ul class="sub-sub">
+										<li>
+											<a class="" href="DataTransferConfig.html"><span class="sub-menu-text">数据交换配置</span></a>
+										</li>
+										<li>
+											<a class="" href="DataTransferMonitor.html"><span class="sub-menu-text">数据交换监控管理</span></a>
+										</li>
+										<li>
+											<a class="" href="DataAuditManagement.html"><span class="sub-menu-text">数据审计管理</span></a>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<a class="" href="DataQualityControl.html"><span class="sub-menu-text">数据质量管控系统</span></a>
+								</li>
+								<li>
+									<a class="" href="DataQualityControl.html"><span class="sub-menu-text">数据资源共享交换系统</span></a>
+								</li>
+
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a href="GISOperation.html" class="">
+								<i class="fa fa-table fa-fw"></i> <span class="menu-text">GIS分析展示平台</span>
+							</a>
+						</li>
+						<li class="has-sub">
+							<a href="analytical_decision.html" class="">
+								<i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">综合分析辅助决策平台</span>
+								<span class="arrow"></span>
+							</a>
+							<ul class="sub">
+								<li class="has-sub-sub">
+									<a href="javascript:;" class=""><span class="sub-menu-text">公路建设分析系统</span>
+										<span class="arrow"></span>
+									</a>
+									<ul class="sub-sub">
+										<li>
+											<a class="" href="investment-time.html"><span class="sub-sub-menu-text">时间维度分析</span></a>
+										</li>
+										<li>
+											<a class="" href="investment-space.html"><span class="sub-sub-menu-text">空间维度分析</span></a>
+										</li>
+									</ul>
+								</li>
+								<li class="has-sub-sub">
+									<a href="javascript:;" class=""><span class="sub-menu-text">公路养护分析系统</span>
+										<span class="arrow"></span>
+									</a>
+									<ul class="sub-sub">
+										<li>
+											<a class="" href="fjyh_time_dimension.html"><span class="sub-sub-menu-text">时间维度分析</span></a>
+										</li>
+										<li>
+											<a class="" href="fjyh_space_dimension.html"><span class="sub-sub-menu-text">空间维度分析</span></a>
+										</li>
+									</ul>
+								</li>
+								<li class="has-sub-sub">
+									<a href="javascript:;" class=""><span class="sub-menu-text">路政管理分析系统</span>
+										<span class="arrow"></span>
+									</a>
+									<ul class="sub-sub">
+										<li class="has-sub-sub">
+											<a href="javascript:;" class=""><span class="sub-menu-text">路政许可</span>
+												<span class="arrow"></span>
+											</a>
+											<ul class="sub-sub">
+												<li>
+													<a class="" href="permission_time.html"><span class="sub-sub-menu-text">时间维度分析</span></a>
+												</li>
+												<li>
+													<a class="" href="permission_area.html"><span class="sub-sub-menu-text">空间维度分析</span></a>
+												</li>
+											</ul>
+										</li>
+										<li>
+											<a class="" href="compensation.html"><span class="sub-sub-menu-text">路损赔偿</span></a>
+										</li>
+										<li class="has-sub-sub">
+											<a href="javascript:;" class=""><span class="sub-menu-text">函告案件</span>
+												<span class="arrow"></span>
+											</a>
+											<ul class="sub-sub">
+												<li>
+													<a class="" href="case_time.html"><span class="sub-sub-menu-text">时间维度分析</span></a>
+												</li>
+												<li>
+													<a class="" href="case_area.html"><span class="sub-sub-menu-text">空间维度分析</span></a>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<a class="" href="toll_fees.html"><span class="sub-menu-text">通行费分析系统</span></a>
+								</li>
+								<li class="has-sub-sub">
+									<a href="javascript:" class=""><span class="sub-menu-text">应急管理分析系统</span>
+										<span class="arrow"></span>
+									</a>
+									<ul class="sub-sub">
+										<li>
+											<a class="" href="emergencyManagement.html"><span class="sub-sub-menu-text">统计展示</span></a>
+										</li>
+										<li>
+											<a class="" href="emergencyManagement_GIS.html"><span class="sub-sub-menu-text">GIS地图展示</span></a>
+										</li>
+									</ul>
+								</li>
+								<li class="has-sub-sub">
+									<a href="javascript:" class=""><span class="sub-menu-text">路网运行分析系统</span>
+										<span class="arrow"></span>
+									</a>
+									<ul class="sub-sub">
+										<li>
+											<a class="" href="road_run.html"><span class="sub-sub-menu-text">运行情况</span></a>
+										</li>
+										<li>
+											<a class="" href="road_report.html"><span class="sub-sub-menu-text">接报情况</span></a>
+										</li>
+										<li>
+											<a class="" href="road_call.html"><span class="sub-sub-menu-text">话务量分布</span></a>
+										</li>
+										<li>
+											<a class="" href="Record_Message.html"><span class="sub-sub-menu-text">平台录入信息来源分布</span></a>
+										</li>
+										<li>
+											<a class="" href="Recive_events.html"><span class="sub-sub-menu-text">接报事件通行影响分布</span></a>
+										</li>
+										<li>
+											<a class="" href="Recive_events_cause.html"><span class="sub-sub-menu-text">接报事件原因分布</span></a>
+										</li>
+										<li>
+											<a class="" href="Receive_Message_Time.html"><span class="sub-sub-menu-text">接报信息时间分布</span></a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="has-sub active">
+							<a href="javascript:;" class="">
+								<i class="fa fa-table fa-fw"></i> <span class="menu-text">用户管理平台</span>
+								<span class="arrow"></span>
+							</a>
+							<ul class="sub">
+								<li>
+									<a class="" href="UserInfoManagement.html"><span class="sub-menu-text">用户信息管理</span></a>
+								</li>
+								<li class="current">
+									<a class="" href="UserRoleManagement.html"><span class="sub-menu-text">用户角色管理</span></a>
+								</li>
+								<li>
+									<a class="" href="UserRightManagement.html"><span class="sub-menu-text">用户权限管理</span></a>
+								</li>
+								<li>
+									<a class="" href="AdministratorList.html"><span class="sub-menu-text">管理员列表</span></a>
+								</li>
+							</ul>
+						</li>
+						<li class="has-sub">
+
+						</li>
+					</ul>
+					<!-- /SIDEBAR MENU -->
+				</div>
+			</div>
+			<!-- /SIDEBAR -->
+			<div id="main-content">
+				<div class="container">
+					<div class="row">
+						<div id="content" class="col-lg-12">
+							<!-- PAGE HEADER-->
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="page-header">
+										<!-- STYLER -->
+
+										<!-- /STYLER -->
+										<!-- BREADCRUMBS -->
+										<ul class="breadcrumb">
+											<li>
+												<i class="fa fa-home"></i>
+												<a href="index.html">主页</a>
+											</li>
+											<li>用户管理平台 - 用户角色管理</li>
+										</ul>
+										<!-- /BREADCRUMBS -->
+										<div class="clearfix">
+											<h3 class="content-title pull-left">用户角色管理</h3>
+											<button class="btn btn-danger" id="BatchDeleteUserBtn" style="float: right;margin-top: 5px;"><i class="fa fa-trash-o"></i>批量删除</button> <button class="btn btn-primary" id="AddUserBtn" style="float: right;margin-top: 5px;"><i class="fa fa-plus"></i>添加角色</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /PAGE HEADER -->
+							<!-- DATA TABLES -->
+							<div class="row">
+								<!-- BOX -->
+								<div class="box border purple" style="margin-top:0px;">
+									<!--<div class="box-title">
+										<h4><i class="fa fa-table"></i>用户角色管理</h4>
+										<div class="tools hidden-xs">
+											<a href="#box-config" data-toggle="modal" class="config">
+												<i class="fa fa-cog"></i>
+											</a>
+											<a href="javascript:;" class="reload">
+												<i class="fa fa-refresh"></i>
+											</a>
+											<a href="javascript:;" class="collapse">
+												<i class="fa fa-chevron-up"></i>
+											</a>
+											<a href="javascript:;" class="remove">
+												<i class="fa fa-times"></i>
+											</a>
+										</div>
+									</div>-->
+									<div class="box-body">
+										<table id="RoleManegementDataTable" cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered table-hover">
+											<thead>
+												<tr>
+													<th style="width: 20px;text-align: center;"><input type="checkbox" id="CheckboxForUserID"></th>
+													<th style="width: 40px;text-align: center;">ID</th>
+													<th style="width: 60px;text-align: center;">角色名称</th>
+													<th style="width: 40px;text-align: center;">用户列表</th>
+													<th style="width: 300px;text-align: center;">角色描述</th>
+													<th style="width: 40px;text-align: center;">操作</th>
+												</tr>
+											</thead>
+											<tbody style="height:20px;text-align: center;">
+												<tr class="gradeX">
+													<td><input type="checkbox" class="checkbox_select"></td>
+													<td>10110</td>
+													<td>超级管理员</td>
+													<td>张伟，李志明</td>
+													<td class="center hidden-xs">系统内至高无上的权利</td>
+													<td class="center hidden-xs">
+														<a href="javascript:void(0);" onclick="EditCurrentItem(this)">
+															<i class="fa fa-edit"></i>
+														</a>
+														<a href="javascript:void(0);" onclick="DeleteCurrentItem(this)">
+															<i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+												</tr>
+												<tr class="gradeC">
+													<td><input type="checkbox" class="checkbox_select"></td>
+													<td>10121</td>
+													<td>管理员</td>
+													<td>赵亮，雷鸣，齐刚</td>
+													<td class="center hidden-xs">系统内数据更新删除检索的权利</td>
+													<td class="center hidden-xs">
+														<a href="javascript:void(0);" onclick="EditCurrentItem(this)">
+															<i class="fa fa-edit"></i>
+														</a>
+														<a href="javascript:void(0);" onclick="DeleteCurrentItem(this)">
+															<i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+												</tr>
+												<tr class="gradeA">
+													<td><input type="checkbox" class="checkbox_select"></td>
+													<td>12312</td>
+													<td>服务器系统管理员</td>
+													<td>李楚，姜黎黎</td>
+													<td class="center hidden-xs">服务器常规信息编辑提交</td>
+													<td class="center hidden-xs">
+														<a href="javascript:void(0);" onclick="EditCurrentItem(this)">
+															<i class="fa fa-edit"></i>
+														</a>
+														<a href="javascript:void(0);" onclick="DeleteCurrentItem(this)">
+															<i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+												</tr>
+												<tr class="gradeA">
+													<td><input type="checkbox" class="checkbox_select"></td>
+													<td>11232</td>
+													<td>平台安全管理员</td>
+													<td>王向上</td>
+													<td class="center hidden-xs">负责整个系统安全运行维护</td>
+													<td class="center hidden-xs">
+														<a href="javascript:void(0);" onclick="EditCurrentItem(this)">
+															<i class="fa fa-edit"></i>
+														</a>
+														<a href="javascript:void(0);" onclick="DeleteCurrentItem(this)">
+															<i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+												</tr>
+												<tr class="gradeX">
+													<td><input type="checkbox" class="checkbox_select"></td>
+													<td>14545</td>
+													<td>超级管理员</td>
+													<td>张伟，李志明</td>
+													<td class="center hidden-xs">系统内至高无上的权利</td>
+													<td class="center hidden-xs">
+														<a href="javascript:void(0);" onclick="EditCurrentItem(this)">
+															<i class="fa fa-edit"></i>
+														</a>
+														<a href="javascript:void(0);" onclick="DeleteCurrentItem(this)">
+															<i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+												</tr>
+												<tr class="gradeC">
+													<td><input type="checkbox" class="checkbox_select"></td>
+													<td>17772</td>
+													<td>平台安全审计员</td>
+													<td>赵亮，雷鸣，齐刚</td>
+													<td class="center hidden-xs">系统内数据更新删除检索的权利</td>
+													<td class="center hidden-xs">
+														<a href="javascript:void(0);" onclick="EditCurrentItem(this)">
+															<i class="fa fa-edit"></i>
+														</a>
+														<a href="javascript:void(0);" onclick="DeleteCurrentItem(this)">
+															<i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+												</tr>
+												<tr class="gradeA">
+													<td><input type="checkbox" class="checkbox_select"></td>
+													<td>12311</td>
+													<td>平台安全审计员</td>
+													<td>田伟，魏竹斌</td>
+													<td class="center hidden-xs">服务器常规信息编辑提交</td>
+													<td class="center hidden-xs">
+														<a href="javascript:void(0);" onclick="EditCurrentItem(this)">
+															<i class="fa fa-edit"></i>
+														</a>
+														<a href="javascript:void(0);" onclick="DeleteCurrentItem(this)">
+															<i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+												</tr>
+												<tr class="gradeA">
+													<td><input type="checkbox" class="checkbox_select"></td>
+													<td>14310</td>
+													<td>平台安全管理员</td>
+													<td>王向上</td>
+													<td class="center hidden-xs">负责整个系统安全运行维护</td>
+													<td class="center hidden-xs">
+														<a href="javascript:void(0);" onclick="EditCurrentItem(this)">
+															<i class="fa fa-edit"></i>
+														</a>
+														<a href="javascript:void(0);" onclick="DeleteCurrentItem(this)">
+															<i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+												</tr>
+												<tr class="gradeX">
+													<td><input type="checkbox" class="checkbox_select"></td>
+													<td>14531</td>
+													<td>超级管理员</td>
+													<td>张伟，李志明</td>
+													<td class="center hidden-xs">系统内至高无上的权利</td>
+													<td class="center hidden-xs">
+														<a href="javascript:void(0);" onclick="EditCurrentItem(this)">
+															<i class="fa fa-edit"></i>
+														</a>
+														<a href="javascript:void(0);" onclick="DeleteCurrentItem(this)">
+															<i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+												</tr>
+												<tr class="gradeC">
+													<td><input type="checkbox" class="checkbox_select"></td>
+													<td>13645</td>
+													<td>管理员</td>
+													<td>赵亮，雷鸣，齐刚</td>
+													<td class="center hidden-xs">系统内数据更新删除检索的权利</td>
+													<td class="center hidden-xs">
+														<a href="javascript:void(0);" onclick="EditCurrentItem(this)">
+															<i class="fa fa-edit"></i>
+														</a>
+														<a href="javascript:void(0);" onclick="DeleteCurrentItem(this)">
+															<i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+												</tr>
+												<tr class="gradeA">
+													<td><input type="checkbox" class="checkbox_select"></td>
+													<td>14565</td>
+													<td>服务器系统管理员</td>
+													<td>张之良，李新发</td>
+													<td class="center hidden-xs">服务器常规信息编辑提交</td>
+													<td class="center hidden-xs">
+														<a href="javascript:void(0);" onclick="EditCurrentItem(this)">
+															<i class="fa fa-edit"></i>
+														</a>
+														<a href="javascript:void(0);" onclick="DeleteCurrentItem(this)">
+															<i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+												</tr>
+												<tr class="gradeA">
+													<td><input type="checkbox" class="checkbox_select"></td>
+													<td>16544</td>
+													<td>游客类型二</td>
+													<td>王向上</td>
+													<td class="center hidden-xs">系统页面浏览</td>
+													<td class="center hidden-xs">
+														<a href="javascript:void(0);" onclick="EditCurrentItem(this)">
+															<i class="fa fa-edit"></i>
+														</a>
+														<a href="javascript:void(0);" onclick="DeleteCurrentItem(this)">
+															<i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+												</tr>
+											</tbody>
+											<tfoot>
+
+											</tfoot>
+										</table>
+									</div>
+
+								</div>
+								<!-- /BOX -->
+								<!--
+                                    	作者：815827996@qq.com
+                                    	时间：2017-07-19
+                                    	描述：删除用户对话框
+                                    -->
+								<div id="DeleteUserModelDialog" style="display: none;" class="modal-dialog"><button type="button" class="bootbox-close-button close" style="margin-top: 50px;">x5656</button>
+									<div class="modal-content">
+										<div class="modal-body">
+											<div class="bootbox-body">角色删除需谨慎，确定删除吗？</div>
+										</div>
+										<div class="modal-footer"><button data-bb-handler="confirm" type="button" class="btn btn-primary" onclick="DialogHide()">确定</button><button data-bb-handler="cancel" type="button" class="btn btn-default" onclick="DialogHide()">取消</button></div>
+									</div>
+								</div>
+								<!--
+                                    	作者：815827996@qq.com
+                                    	时间：2017-07-19
+                                    	描述：编辑用户对话框
+                                    -->
+								<div id="EditUserRoleDialog" class="modal-dialog" style="display: none;">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="DialogHide()">×</button>
+											<h4 class="modal-title">编辑角色类型</h4>
+										</div>
+										<div class="modal-body">
+											<div>
+												<table class="table table-border table-bordered">
+													<tr>
+														<th>ID</th>
+														<td><input type="text">
+														</td>
+													</tr>
+													<tr>
+														<th>角色名称</th>
+														<td><input type="text">
+														</td>
+													</tr>
+													<tr>
+														<th>用户列表</th>
+														<td><input type="text">
+														</td>
+													</tr>
+													<tr>
+														<th>角色描述</th>
+														<td><input type="text">
+														</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary" onclick="DialogHide()">提交</button>
+											<button type="button" class="btn btn-default" data-dismiss="modal" onclick="DialogHide()">取消</button>
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!--
+	                                      作者：815827996@qq.com
+	                                      时间：2017-07-19
+	                                       描述：添加用户
+                            -->
+								<div id="AddUserModelDialog" class="modal-dialog" style="display: none;">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="DialogHide()">×</button>
+											<h4 class="modal-title">添加角色类型</h4>
+										</div>
+										<div class="modal-body">
+											<div>
+												<table class="table table-border table-bordered">
+													<tr>
+														<th>ID</th>
+														<td><input type="text">
+														</td>
+													</tr>
+													<tr>
+														<th>角色名称</th>
+														<td><input type="text">
+														</td>
+													</tr>
+													<tr>
+														<th>用户列表</th>
+														<td><input type="text">
+														</td>
+													</tr>
+													<tr>
+														<th>角色描述</th>
+														<td><input type="text">
+														</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary" onclick="DialogHide()">提交</button>
+											<button type="button" class="btn btn-default" data-dismiss="modal" onclick="DialogHide()">取消</button>
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+
+								<!--
+                                    	作者：815827996@qq.com
+                                    	时间：2017-07-19
+                                    	描述：批量删除用户
+                                    -->
+								<div id="BatchDeleteUserModelDialog" style="display: none;" class="modal-dialog"><button type="button" class="bootbox-close-button close" style="margin-top: 50px;">x5656</button>
+									<div class="modal-content">
+										<div class="modal-body">
+											<div class="bootbox-body">确定删除复选框所选角色？</div>
+										</div>
+										<div class="modal-footer"><button data-bb-handler="confirm" type="button" class="btn btn-primary" onclick="DialogHide()">确定</button><button data-bb-handler="cancel" type="button" class="btn btn-default" onclick="DialogHide()">取消</button></div>
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+						<!-- /CONTENT-->
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!--/PAGE -->
+		<!-- JAVASCRIPTS -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<!-- JQUERY -->
+		<script src="js/jquery/jquery-2.0.3.min.js"></script>
+		<!-- JQUERY UI-->
+		<script src="js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+		<!-- BOOTSTRAP -->
+		<script src="bootstrap-dist/js/bootstrap.min.js"></script>
+
+		<!-- DATE RANGE PICKER -->
+		<script src="js/bootstrap-daterangepicker/moment.min.js"></script>
+
+		<script src="js/bootstrap-daterangepicker/daterangepicker.min.js"></script>
+		<!-- SLIMSCROLL -->
+		<script type="text/javascript" src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script>
+		<script type="text/javascript" src="js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
+		<!-- BLOCK UI -->
+		<script type="text/javascript" src="js/jQuery-BlockUI/jquery.blockUI.min.js"></script>
+		<!-- DATA TABLES -->
+		<script type="text/javascript" src="js/datatables/media/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="js/datatables/media/assets/js/datatables.min.js"></script>
+		<script type="text/javascript" src="js/datatables/extras/TableTools/media/js/TableTools.min.js"></script>
+		<script type="text/javascript" src="js/datatables/extras/TableTools/media/js/ZeroClipboard.min.js"></script>
+		<!-- COOKIE -->
+		<script type="text/javascript" src="js/jQuery-Cookie/jquery.cookie.min.js"></script>
+		<!-- CUSTOM SCRIPT -->
+		<script src="js/script.js"></script>
+		<script>
+			jQuery(document).ready(function() {
+				App.setPage("UserRoleManagement"); //Set current page
+				App.init(); //Initialise plugins and elements
+				$('td').click(function() {
+					$(this).parent().find('td').eq(0).children('input').attr("checked", "true");
+				});
+				$('#RoleManegementDataTable').DataTable({
+					//					"columnDefs":[{"orderable":false,"targets":0,1,2,3,4,5,6}],
+					"sPaginationType": "full_numbers",
+					"bPaginate": false,
+					"bFilter": false,
+					"bInfo": true, //是否显示页脚信息，DataTables插件左下角显示记录数  
+					"oLanguage": {
+						//"sLengthMenu": "每页显示 _MENU_ 条记录",
+						"sZeroRecords": "抱歉， 没有找到",
+						"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+						"sInfoEmpty": "没有数据",
+						"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+						"sZeroRecords": "没有检索到数据",
+						//"sSearch": "搜索:",
+						"oPaginate": {
+							"sFirst": "首页",
+							"sPrevious": "前一页",
+							"sNext": "后一页",
+							"sLast": "尾页"
+						}
+					}
+				});  
+				$("#AddUserBtn").click(function() {
+					$("#AddUserModelDialog").show();
+				});
+				$("#BatchDeleteUserBtn").click(function() {
+					$("#BatchDeleteUserModelDialog").show();
+				});
+				$("#CheckboxForUserID").click(function() {
+					var isCheck = $("CheckboxForUserID").is(":checked")
+					if(!isCheck) {  
+						$('.checkbox_select').each(function() {        
+							this.checked = true;      
+						});
+					} else {
+						$('.checkbox_select').each(function() {        
+							this.checked = false;      
+						});
+					}
+				});
+			});
+
+			function EditCurrentItem(a) {
+				var index = $(a).parent().parent().index();
+				$("#EditUserRoleDialog").show('slow');
+			}
+
+			function DeleteCurrentItem(a) {
+				var index = $(a).parent().parent().index();
+				$("#DeleteUserModelDialog").show('slow');
+			};
+
+			function DialogHide() {
+				$("#DeleteUserModelDialog").hide();
+				$("#BatchDeleteUserModelDialog").hide();
+				$("#AddUserModelDialog").hide();
+				$("#EditUserRoleDialog").hide();
+			}
+		</script>
+		<!-- /JAVASCRIPTS -->
+	</body>
+
+</html>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.checc.com/demo/namespace/eventservice/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="EmergencyEventService"
+    targetNamespace="http://www.checc.com/demo/namespace/eventservice/">
+    <!-- 定义webservice使用的数据类型 -->
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.checc.com/demo/namespace/eventservice/" >
+            <xsd:element name="event">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="year" type="xsd:short" />
+                        <xsd:element name="month" type="xsd:byte" />
+                        <xsd:element name="day" type="xsd:short" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="eventResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" maxOccurs="unbounded" type="tns:eventResult"></xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:complexType name="eventResult">
+                <xsd:sequence>
+                    <xsd:element name="count" type="xsd:int" />
+                    <xsd:element name="year" type="xsd:short" />
+                    <xsd:element name="month" type="xsd:byte" />
+                    <xsd:element name="day" type="xsd:short" />
+                    <xsd:element name="areaCode" type="xsd:string" />
+                    <xsd:element name="areaName" type="xsd:string" />
+                    <xsd:element name="roadCode" type="xsd:string" />
+                    <xsd:element name="typeCode">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="040101" />
+                                <xsd:enumeration value="040102" />
+                                <xsd:enumeration value="040103" />
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="typeName" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            
+            <xsd:element name="eventDetail">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element name="year" type="xsd:short" />
+                        <xsd:element name="month" type="xsd:byte" />
+                    </xsd:all>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="eventDetailResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="typeCode" type="xsd:string" />
+                        <xsd:element name="typeName" type="xsd:string" />
+                        <xsd:element name="roadCode" type="xsd:string" />
+                        <xsd:element name="areaCode" type="xsd:string" />
+                        <xsd:element name="areaName" type="xsd:string" />
+                        <xsd:element name="longitude" type="xsd:double" />
+                        <xsd:element name="latitude" type="xsd:double" />
+                        <xsd:element name="reportTime" type="xsd:dateTime" />
+                        <xsd:element name="blockTraffic" type="xsd:string" />
+                        <xsd:element name="openTime" type="xsd:dateTime" />
+                        <xsd:element name="damageLength" type="xsd:double" />
+                        <xsd:element name="lost" type="xsd:decimal" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="event">
+        <wsdl:part name="parameter" element="tns:event"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="eventResponse">
+        <wsdl:part name="parameter" element="tns:eventResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="eventDetail">
+        <wsdl:part name="parameter" element="tns:eventDetail"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="eventDetailResponse">
+        <wsdl:part name="parameter" element="tns:eventDetailResponse"></wsdl:part>
+    </wsdl:message>
+    
+    <wsdl:portType name="IEventService">
+        <wsdl:operation name="event">
+            <wsdl:input message="tns:event" />
+            <wsdl:output message="tns:eventResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="eventDetail">
+            <wsdl:input message="tns:eventDetail" />
+            <wsdl:output message="tns:eventDetailResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <wsdl:binding name="eventServiceSOAP" type="tns:IEventService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="event">
+            <soap:operation soapAction="http://www.checc.com/demo/namespace/eventservice/event"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="eventDetail">
+            <soap:operation soapAction="http://www.checc.com/demo/namespace/eventservice/eventDetail"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <wsdl:service name="EventService">
+        <wsdl:port name="EventServiceSOAP" binding="tns:eventServiceSOAP">
+            <soap:address location="http://localhost:8080/fujian-demo/service/EmergencyEventService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

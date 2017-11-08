@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sws="http://www.springframework.org/schema/web-services"
+    xmlns:ws="http://www.springframework.org/schema/integration/ws"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+    http://www.springframework.org/schema/context  
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+    http://www.springframework.org/schema/web-services  
+    http://www.springframework.org/schema/web-services/web-services-2.0.xsd">
+
+    <!-- 扫描指定包下的组件 -->
+    <context:component-scan base-package="com.checc" />
+    <sws:annotation-driven />
+
+    <!-- 引入wsdl文件 -->
+    <sws:static-wsdl location="/WEB-INF/wsdl/InvestmentService.wsdl" />
+    <sws:static-wsdl location="/WEB-INF/wsdl/RoadPermissionService.wsdl" />
+    <sws:static-wsdl location="/WEB-INF/wsdl/RoadCompensationService.wsdl" />
+    <sws:static-wsdl location="/WEB-INF/wsdl/InformCaseService.wsdl" />
+    <sws:static-wsdl location="/WEB-INF/wsdl/TollService.wsdl" />
+    <sws:static-wsdl location="/WEB-INF/wsdl/EmergencyEventService.wsdl" />
+    <sws:static-wsdl location="/WEB-INF/wsdl/DataTransferService.wsdl" />
+
+    <bean id="applicationProperties"
+        class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="locations">
+            <list>
+                <value>classpath:config/config.properties</value>
+                <value>classpath:config/db.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- PropertyPlaceholderConfigurer,用于spring ${placeholder}的解析 -->
+    <bean id="propertyConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <property name="properties" ref="applicationProperties" />
+    </bean>
+
+    <import resource="classpath*:/config/spring/spring-context-ds.xml" />
+
+</beans>

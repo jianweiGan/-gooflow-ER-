@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.checc.com/demo/namespace/permissionservice/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PermissionService"
+    targetNamespace="http://www.checc.com/demo/namespace/permissionservice/">
+    <!-- 定义webservice使用的数据类型 -->
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.checc.com/demo/namespace/permissionservice/" >
+            <xsd:element name="permission">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element name="area" type="xsd:string" />
+                        <xsd:element name="year" type="xsd:int" />
+                    </xsd:all>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="permissionByType">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element name="area" type="xsd:string" />
+                    </xsd:all>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="permissionResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" maxOccurs="unbounded" type="tns:permissionResult"></xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="permissionByTypeResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" maxOccurs="unbounded" type="tns:permissionResult"></xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:complexType name="permissionResult">
+                <xsd:sequence>
+                    <xsd:element name="total" type="xsd:int" />
+                    <xsd:element name="year" type="xsd:int" />
+                    <xsd:element name="month" type="xsd:int" />
+                    <xsd:element name="areaCode" type="xsd:string" />
+                    <xsd:element name="areaName" type="xsd:string" />
+                    <xsd:element name="longitude" type="xsd:double" />
+                    <xsd:element name="latitude" type="xsd:double" />
+                    <xsd:element name="typeCode">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="030101" />
+                                <xsd:enumeration value="030102" />
+                                <xsd:enumeration value="030103" />
+                                <xsd:enumeration value="030104" />
+                                <xsd:enumeration value="030105" />
+                                <xsd:enumeration value="030106" />
+                                <xsd:enumeration value="030107" />
+                                <xsd:enumeration value="030108" />
+                                <xsd:enumeration value="030109" />
+                                <xsd:enumeration value="030110" />
+                                <xsd:enumeration value="030111" />
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="typeName" type="xsd:string" />
+                    <xsd:element name="permissionStatus" type="xsd:boolean" />
+                    <xsd:element name="acceptStatus" type="xsd:boolean" />
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    
+    <wsdl:message name="permission">
+        <wsdl:part name="parameter" element="tns:permission"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="permissionResponse">
+        <wsdl:part name="parameter" element="tns:permissionResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="permissionByType">
+        <wsdl:part name="parameter" element="tns:permissionByType"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="permissionByTypeResponse">
+        <wsdl:part name="parameter" element="tns:permissionByTypeResponse"></wsdl:part>
+    </wsdl:message>
+
+    <wsdl:portType name="IPermissionService">
+        <wsdl:operation name="permission">
+            <wsdl:input message="tns:permission" />
+            <wsdl:output message="tns:permissionResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="permissionByType">
+            <wsdl:input message="tns:permissionByType" />
+            <wsdl:output message="tns:permissionByTypeResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <wsdl:binding name="permissionServiceSOAP" type="tns:IPermissionService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="permission">
+            <soap:operation soapAction="http://www.checc.com/demo/namespace/permissionservice/permission"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="permissionByType">
+            <soap:operation soapAction="http://www.checc.com/demo/namespace/permissionservice/permissionByType"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <wsdl:service name="PermissionService">
+        <wsdl:port name="PermissionServiceSOAP" binding="tns:permissionServiceSOAP">
+            <soap:address location="http://localhost:8080/fujian-demo/service/RoadPermissionService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

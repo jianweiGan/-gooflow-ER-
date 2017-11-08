@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>时间维度分析</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" type="text/css" href="css/cloud-admin.css">
+    <link rel="stylesheet" type="text/css" href="css/themes/default.css" id="skin-switcher">
+    <link rel="stylesheet" type="text/css" href="css/responsive.css">
+    <!-- STYLESHEETS -->
+    <!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- ANIMATE -->
+    <link rel="stylesheet" type="text/css" href="css/animatecss/animate.min.css" />
+    <!-- DATE RANGE PICKER -->
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+    <!-- TODO -->
+    <link rel="stylesheet" type="text/css" href="js/jquery-todo/css/styles.css" />
+    <!-- FULL CALENDAR -->
+    <link rel="stylesheet" type="text/css" href="js/fullcalendar/fullcalendar.min.css" />
+    <!-- GRITTER -->
+    <link rel="stylesheet" type="text/css" href="js/gritter/css/jquery.gritter.css" />
+    <!-- FONTS -->
+    <!--link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'-->
+</head>
+
+<body style="overflow:-Scroll;overflow-y:hidden" >
+<!-- HEADER -->
+<header class="navbar clearfix" id="header">
+    <div class="container">
+        <div class="navbar-brand">
+            <!-- COMPANY LOGO -->
+            <a href="index.html">
+                <img src="img/logo/logo.png" alt="Cloud Admin Logo" class="img-responsive" height="30" width="120">
+            </a>
+            <!-- /COMPANY LOGO -->
+            <!-- TEAM STATUS FOR MOBILE -->
+            <div class="visible-xs">
+                <a href="#" class="team-status-toggle switcher btn dropdown-toggle">
+                    <i class="fa fa-users"></i>
+                </a>
+            </div>
+            <!-- /TEAM STATUS FOR MOBILE -->
+            <!-- SIDEBAR COLLAPSE -->
+            <div id="sidebar-collapse" class="sidebar-collapse btn">
+                <i class="fa fa-bars" data-icon1="fa fa-bars" data-icon2="fa fa-bars"></i>
+            </div>
+            <!-- /SIDEBAR COLLAPSE -->
+        </div>
+        <!-- NAVBAR LEFT -->
+        <ul class="nav navbar-nav pull-left hidden-xs" id="navbar-left">
+            <li class="dropdown">
+                <a href="#" class="team-status-toggle dropdown-toggle tip-bottom" data-toggle="tooltip" title="获取服务状态">
+                      <i class="fa fa-archive fa-fw"></i>
+                            <span class="name">服务器状态</span>
+                            <i class="fa fa-angle-down"></i>
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-cog"></i>
+                    <span class="name">皮肤</span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu skins">
+                    <li class="dropdown-title">
+                        <span><i class="fa fa-leaf"></i>主题皮肤</span>
+                    </li>
+                    <li>
+                        <a href="#" data-skin="default">默认</a>
+                    </li>
+                    <li>
+                        <a href="#" data-skin="night">暗影</a>
+                    </li>
+                    <li>
+                        <a href="#" data-skin="earth">大地</a>
+                    </li>
+                    <li>
+                        <a href="#" data-skin="utopia">乌托邦</a>
+                    </li>
+                    <li>
+                        <a href="#" data-skin="nature">自然</a>
+                    </li>
+                    <li>
+                        <a href="#" data-skin="graphite">石墨</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- /NAVBAR LEFT -->
+        <!-- BEGIN TOP NAVIGATION MENU -->
+        <ul class="nav navbar-nav pull-right">
+            <!-- BEGIN NOTIFICATION DROPDOWN -->
+            <li class="dropdown" id="header-notification">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-bell"></i>
+                    <span class="badge">7</span>
+                </a>
+                <ul class="dropdown-menu notification">
+                    <li class="dropdown-title">
+                        <span><i class="fa fa-bell"></i>您当前有4份通知</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-success"><i class="fa fa-user"></i></span>
+                            <span class="body">
+                                        <span class="message">当前3位用户在线 </span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>刚刚</span>
+                                    </span>
+                                    </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-primary"><i class="fa fa-comment"></i></span>
+                            <span class="body">
+                                        <span class="message">赵广提交ETL任务</span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>19分钟前</span>
+                                    </span>
+                                    </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-warning"><i class="fa fa-lock"></i></span>
+                            <span class="body">
+                                        <span class="message">DW1 服务器锁定</span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>32分钟前</span>
+                                    </span>
+                                    </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-warning"><i class="fa fa-exclamation-triangle"></i></span>
+                            <span class="body">
+                                        <span class="message">Oracle11g 连接超时</span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>6 小时前</span>
+                                    </span>
+                                    </span>
+                        </a>
+                    </li>
+                    <li class="footer">
+                        <a href="#">详情 <i class="fa fa-arrow-circle-right"></i></a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END NOTIFICATION DROPDOWN -->
+            <!-- BEGIN INBOX DROPDOWN -->
+            <li class="dropdown" id="header-message">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge">3</span>
+                </a>
+                <ul class="dropdown-menu inbox">
+                    <li class="dropdown-title">
+                        <span><i class="fa fa-envelope-o"></i>您有3条未读信息</span>
+                        <span class="compose pull-right tip-right" title="编辑信息"><i class="fa fa-pencil-square-o"></i></span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="img/avatars/1.jpg" alt="" />
+                            <span class="body">
+                                        <span class="from">刘丹</span>
+                                    <span class="message">
+                                        </span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>刚刚</span>
+                                    </span>
+                                    </span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="img/avatars/dengyuqiao.jpg" alt="" />
+                            <span class="body">
+                                        <span class="from">邓钰桥</span>
+                                    <span class="message">
+                                        </span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>15分钟前</span>
+                                    </span>
+                                    </span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="img/avatars/guochangqing.jpg" alt="" />
+                            <span class="body">
+                                        <span class="from">郭长青</span>
+                                    <span class="message">
+                                        </span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>2小时前</span>
+                                    </span>
+                                    </span>
+
+                        </a>
+                    </li>
+                    <li class="footer">
+                        <a href="#">查看消息详情 <i class="fa fa-arrow-circle-right"></i></a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END INBOX DROPDOWN -->
+            <!-- BEGIN TODO DROPDOWN -->
+            <li class="dropdown" id="header-tasks">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-tasks"></i>
+                    <span class="badge">3</span>
+                </a>
+                <ul class="dropdown-menu tasks">
+                    <li class="dropdown-title">
+                        <span><i class="fa fa-check"></i> 6份任务进程中</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                                    <span class="header clearfix">
+                                        <span class="pull-left">数据库日常更新</span>
+                                    <span class="pull-right">60%</span>
+                                    </span>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                    <span class="sr-only">60% Complete</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                                    <span class="header clearfix">
+                                        <span class="pull-left">账户安全系统升级中</span>
+                                    <span class="pull-right">25%</span>
+                                    </span>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                                    <span class="sr-only">25% Complete</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                                    <span class="header clearfix">
+                                        <span class="pull-left">数据抽取任务12</span>
+                                    <span class="pull-right">40%</span>
+                                    </span>
+                            <div class="progress progress-striped">
+                                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                                    <span class="sr-only">40% Complete</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                                    <span class="header clearfix">
+                                        <span class="pull-left">数据抽取任务13</span>
+                                    <span class="pull-right">70%</span>
+                                    </span>
+                            <div class="progress progress-striped active">
+                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">
+                                    <span class="sr-only">70% Complete</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                                    <span class="header clearfix">
+                                        <span class="pull-left">调度计划7</span>
+                                    <span class="pull-right">65%</span>
+                                    </span>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" style="width: 35%">
+                                    <span class="sr-only">35% Complete (success)</span>
+                                </div>
+                                <div class="progress-bar progress-bar-warning" style="width: 20%">
+                                    <span class="sr-only">20% Complete (warning)</span>
+                                </div>
+                                <div class="progress-bar progress-bar-danger" style="width: 10%">
+                                    <span class="sr-only">10% Complete (danger)</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="footer">
+                        <a href="#">查看所有任务<i class="fa fa-arrow-circle-right"></i></a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END TODO DROPDOWN -->
+            <!-- BEGIN USER LOGIN DROPDOWN -->
+            <li class="dropdown user" id="header-user">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img alt="" src="img/avatars/zhangwei.jpg" />
+                    <span class="username">张伟</span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#"><i class="fa fa-user"></i>头像设置</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-cog"></i> 账户设置</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-eye"></i> 隐私设置</a>
+                    </li>
+                    <li>
+                        <a href="login.html"><i class="fa fa-power-off"></i> 登出</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END USER LOGIN DROPDOWN -->
+        </ul>
+        <!-- END TOP NAVIGATION MENU -->
+    </div>
+    <!-- TEAM STATUS -->
+    <div class="container team-status" id="team-status">
+        <div id="scrollbar">
+            <div class="handle">
+            </div>
+        </div>
+        <div id="teamslider">
+            <ul class="team-list">
+                <li class="current">
+                    <a href="javascript:void(0);">
+                                <span class="image">
+                      <img src="img/avatars/zhangwei.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    你
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 35%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 20%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 10%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">6</span>已完成
+                                <span class="pull-right fa fa-check"></span>
+                </div>
+                <div class="field">
+                    <span class="badge badge-orange">3</span>进程中
+                    <span class="pull-right fa fa-adjust"></span>
+                </div>
+                <div class="field">
+                    <span class="badge badge-red">1</span> 待定
+                    <span class="pull-right fa fa-list-ul"></span>
+                </div>
+                </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                        <span class="image">
+                      <img src="img/avatars/xinghui.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    邢辉
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 15%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 40%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 20%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">2</span> 已完成
+                        <span class="pull-right fa fa-check"></span>
+            </div>
+            <div class="field">
+                <span class="badge badge-orange">8</span> 进程中
+                <span class="pull-right fa fa-adjust"></span>
+            </div>
+            <div class="field">
+                <span class="badge badge-red">4</span> 待定
+                <span class="pull-right fa fa-list-ul"></span>
+            </div>
+            </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                    <span class="image">
+                      <img src="img/avatars/zhangjinhai.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    张金海
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 65%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 10%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 15%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">10</span> 已完成
+                    <span class="pull-right fa fa-check"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-orange">3</span> 进程中
+                        <span class="pull-right fa fa-adjust"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-red">4</span> 待定
+                        <span class="pull-right fa fa-list-ul"></span>
+                    </div>
+                    </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                    <span class="image">
+                      <img src="img/avatars/zhaoguang.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    赵广
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 5%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 48%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 27%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">1</span> 已完成
+                    <span class="pull-right fa fa-check"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-orange">6</span> 进程中
+                        <span class="pull-right fa fa-adjust"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-red">2</span> 待定
+                        <span class="pull-right fa fa-list-ul"></span>
+                    </div>
+                    </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                    <span class="image">
+                      <img src="img/avatars/dengyuqiao.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    邓钰桥
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 21%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 20%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 40%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">4</span> 已完成
+                    <span class="pull-right fa fa-check"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-orange">5</span> 进程中
+                        <span class="pull-right fa fa-adjust"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-red">9</span> 待定
+                        <span class="pull-right fa fa-list-ul"></span>
+                    </div>
+                    </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                    <span class="image">
+                      <img src="img/avatars/guochangqing.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    郭长青
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 45%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 21%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 10%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">6</span> 已完成
+                    <span class="pull-right fa fa-check"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-orange">3</span> 进程中
+                        <span class="pull-right fa fa-adjust"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-red">1</span> 待定
+                        <span class="pull-right fa fa-list-ul"></span>
+                    </div>
+                    </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                    <span class="image">
+                      <img src="img/avatars/wangqianwei.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    王前炜
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 7%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 30%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 10%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">1</span> 已完成
+                    <span class="pull-right fa fa-check"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-orange">6</span> 进程中
+                        <span class="pull-right fa fa-adjust"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-red">2</span> 待定
+                        <span class="pull-right fa fa-list-ul"></span>
+                    </div>
+                    </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                    <span class="image">
+                      <img src="img/avatars/xinghui.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    邢辉
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 70%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 20%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 5%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">13</span> 已完成
+                    <span class="pull-right fa fa-check"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-orange">7</span> 进程中
+                        <span class="pull-right fa fa-adjust"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-red">1</span> 待定
+                        <span class="pull-right fa fa-list-ul"></span>
+                    </div>
+                    </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /TEAM STATUS -->
+</header>
+<!--/HEADER -->
+
+<!-- PAGE -->
+<section id="page">
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar" style="height: 973px;">
+        <div class="sidebar-menu nav-collapse">
+            <div class="divide-20"></div>
+            <!-- SEARCH BAR -->
+            <div id="search-bar">
+                <input class="search" type="text" placeholder="搜索"><i class="fa fa-search search-icon"></i>
+            </div>
+            <!-- /SEARCH BAR -->
+
+            <!-- SIDEBAR QUICK-LAUNCH -->
+            <!-- <div id="quicklaunch">
+                <!-- /SIDEBAR QUICK-LAUNCH -->
+
+            <!-- SIDEBAR MENU -->
+            <ul>
+                <li >
+                    <a href="index.html">
+                        <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">主页</span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+                 <li class="has-sub">
+                            <a href="DataResourceManagementPlatform.html" class="">
+                                <i class="fa fa-certificate fa-fw"></i> <span class="menu-text">数据资源管理平台</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub">
+                                <li class="has-sub-sub">
+                                    <a href="javascript:;" class=""><span class="sub-menu-text">数据监控管理系统</span>
+                                        <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-sub">
+                                        <li>
+                                    		<a class="" href="DataTransferConfig.html"><span class="sub-menu-text">数据交换配置</span></a>
+                                		</li>
+                                		<li>
+                                    		<a class="" href="DataTransferMonitor.html"><span class="sub-menu-text">数据交换监控管理</span></a>
+                                		</li>
+                                		<li>
+                                    		<a class="" href="DataAuditManagement.html"><span class="sub-menu-text">数据审计管理</span></a>
+                                		</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="" href="DataQualityControl.html"><span class="sub-menu-text">数据质量管控</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="DataQualityControl.html"><span class="sub-menu-text">数据资源共享交换系统</span></a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                 <li class="has-sub">
+                    <a href="GISOperation.html" class="">
+                 	   <i class="fa fa-table fa-fw"></i> <span class="menu-text">GIS分析展示平台</span>
+                    </a>
+                </li>
+                <li class="has-sub active">
+                    <a href="analytical_decision.html" class="">
+                        <i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">综合分析辅助决策平台</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        <li class="has-sub-sub">
+                            <a href="javascript:" class=""><span class="sub-menu-text">公路建设分析系统</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-sub">
+                                <li>
+                                    <a class="" href="investment-time.html"><span class="sub-sub-menu-text">时间维度分析</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="investment-space.html"><span class="sub-sub-menu-text">空间维度分析</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-sub-sub">
+                            <a href="javascript:" class=""><span class="sub-menu-text">公路养护分析系统</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-sub ">
+                                <li >
+                                    <a class="" href="fjyh_time_dimension.html"><span class="sub-sub-menu-text">时间维度分析</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="fjyh_space_dimension.html"><span class="sub-sub-menu-text">空间维度分析</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-sub-sub">
+                            <a href="javascript:" class=""><span class="sub-menu-text">路政管理分析系统</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-sub">
+                                <li class="has-sub-sub-sub">
+                                    <a href="javascript:" class=""><span class="sub-menu-text">路政许可</span>
+                                        <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-sub ">
+                                        <li>
+                                            <a class="" href="permission_time.html"><span class="sub-sub-menu-text">时间维度分析</span></a>
+                                        </li>
+                                        <li>
+                                            <a class="" href="permission_area.html"><span class="sub-sub-menu-text">空间维度分析</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="">
+                                    <a class="" href="compensation.html"><span class="sub-sub-menu-text">路损赔偿</span></a>
+                                </li>
+                                <li class="has-sub-sub">
+                                    <a href="javascript:" class=""><span class="sub-menu-text">函告案件</span>
+                                        <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-sub">
+                                        <li>
+                                            <a class="" href="case_time.html"><span class="sub-sub-menu-text">时间维度分析</span></a>
+                                        </li>
+                                        <li>
+                                            <a class="" href="case_area.html"><span class="sub-sub-menu-text">空间维度分析</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                       
+                        <li class="has-sub-sub">
+                                    <a href="javascript:" class=""><span class="sub-menu-text">应急管理分析系统</span>
+                                        <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-sub">
+                                        <li>
+                                            <a class="" href="emergencyManagement.html"><span class="sub-sub-menu-text">统计展示</span></a>
+                                        </li>
+                                        <li>
+                                            <a class="" href="emergencyManagement_GIS.html"><span class="sub-sub-menu-text">GIS地图展示</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                         <li class="has-sub-sub">
+                            <a href="javascript:" class=""><span class="sub-menu-text">路网运行分析系统</span>
+                            <span class="arrow"></span>
+                            </a>
+                             <ul  class="sub-sub active">
+                             <li>
+                                    <a class="" href="road_run.html"><span class="sub-sub-menu-text">运行情况</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="road_report.html"><span class="sub-sub-menu-text">接报情况</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="road_call.html"><span class="sub-sub-menu-text">话务量分布</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="Record_Message.html"><span class="sub-sub-menu-text">平台录入信息来源分布</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="Recive_events.html"><span class="sub-sub-menu-text">接报事件通行影响分布</span></a>
+                                </li>
+                                <li class="current">
+                                    <a class="" href="Recive_events_cause.html"><span class="sub-sub-menu-text">接报事件原因分布</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="Receive_Message_Time.html"><span class="sub-sub-menu-text">接报信息时间分布</span></a>
+                                </li>
+                            </ul>
+                        </li>  
+                        
+                    </ul>
+                </li>
+                
+                
+                <li class="has-sub">
+                    <a href="javascript:" class="">
+                        <i class="fa fa-table fa-fw"></i> <span class="menu-text">用户管理平台</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        <li>
+                            <a class="" href="UserInfoManagement.html"><span class="sub-menu-text">用户信息管理</span></a>
+                        </li>
+                        <li>
+                            <a class="" href="UserRoleManagement.html"><span class="sub-menu-text">用户角色管理</span></a>
+                        </li>
+                        <li>
+                            <a class="" href="UserRightManagement.html"><span class="sub-menu-text">用户权限管理</span></a>
+                        </li>
+                        <li>
+                            <a class="" href="AdministratorList.html"><span class="sub-menu-text">管理员列表</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="has-sub">
+                </li>
+            </ul>
+            <!-- /SIDEBAR MENU -->
+        </div>
+    </div>
+    <!-- /SIDEBAR -->
+
+    <div id="main-content" style="background: white; height: 100%;">
+        <div class="container">
+            <div class="row">
+                <div id="content" class="col-lg-12" style="height: 100%">
+                    <!-- PAGE HEADER-->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <!-- ????????? -->
+                            <div class="page-header" style="margin-bottom: 0px">
+                                <!-- ????????? -->
+                                <!-- BREADCRUMBS -->
+                                <ul class="breadcrumb">
+                                    <li><i class="fa fa-home"></i> <a
+                                        href="fjyh_time_dimension.html">主页</a></li>
+                                    <li>路网运行分析系统-接报事件原因分布 </li>
+                                </ul>
+                                <!-- /BREADCRUMBS -->
+                                <div class="clearfix">
+                                    <h3 class="content-title pull-left">路网运行</h3>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <!-- PAGE HEADER-->
+                    <div class="row">
+                        <div class="col-sm-12 text-center"
+                             style="padding-left: 0; padding-right: 0">
+
+                            <div class="topPanel" style="background-color: #70afc4;">
+                                <div id="main3"
+                                     style="width: 100%; height: 35px; padding-left: 15px; padding-top: 5px; padding-bottom: 5px">
+										<span style="margin-left:10px;margin-top:2px;font-size:17px;float:left"><b>区域：</b></span>
+											<select id="cmbProvince" style="width:15%;height:25px;float:left">
+												<option value="福州市">福州市</option>
+												<option value="漳州市">漳州市</option>
+												<option value="厦门市">厦门市</option>
+												<option value="莆田市">莆田市</option>
+												<option value="三明市">三明市</option>
+												<option value="泉州市">泉州市</option>
+												<option value="南平市">南平市</option>
+												<option value="龙岩市">龙岩市</option>
+												<option value="宁德市">宁德市</option>
+											</select>
+												
+								<span style="margin-left:10px;margin-top:2px;font-size:17px;float:left"><b>统计类型</b></span>
+                                
+								<select id="cmbCity" style="width:15%;height:25px;float:left">
+							
+                                    <option value="接报情况">计划性养护施工</option>
+                                    <option value="话务量分布">交通事故</option>
+                                    <option value="平台录入信息来源分布">自然灾害</option>
+									<option value="接报事件通行影响分布">其他事件</option>
+                                 
+                                   
+								</select> 
+                                    <span
+                                    style="margin-left: 10px; margin-top: 2px; margin-bottom: 1px; font-size: 17px; float: left"><b>年份：</b></span>
+                                    <select id="year"
+                                            style="width: 300px; height: 25px; float: left">
+                                        
+                                        <option value="2016">2016</option>
+                                        <option value="2015">2015</option>
+                                        <option value="2014">2014</option>
+                                        <option value="2017">2013</option>
+                                    </select>
+                                    <button
+                                        style="margin-left: 10px; margin-bottom: 2px; padding-top: 2px; padding-bottom: 2px; width: 50px; float: left"
+                                        class="btn btn-default" data-dismiss="modal"
+                                        onclick="fn()">查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div style="height: 800px;">
+                                <div id="map" style="width: 70%; height: 100%; float: left;"></div>
+                                <div id="map1" style="width: 30%; height: 100%; float: left;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!--/PAGE -->
+<script src="js/jquery/jquery-2.0.3.min.js"></script>
+<!-- JQUERY UI-->
+<script
+    src="js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+<!-- BOOTSTRAP -->
+<script src="bootstrap-dist/js/bootstrap.min.js"></script>
+
+<!-- DATE RANGE PICKER -->
+<script src="js/bootstrap-daterangepicker/moment.min.js"></script>
+
+<script src="js/bootstrap-daterangepicker/daterangepicker.min.js"></script>
+<!-- SLIMSCROLL -->
+<script type="text/javascript"
+        src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script>
+<script type="text/javascript"
+        src="js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
+<!-- BLOCK UI -->
+<script type="text/javascript"
+        src="js/jQuery-BlockUI/jquery.blockUI.min.js"></script>
+<!-- DATA TABLES -->
+<script type="text/javascript"
+        src="js/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+        src="js/datatables/media/assets/js/datatables.min.js"></script>
+<script type="text/javascript"
+        src="js/datatables/extras/TableTools/media/js/TableTools.min.js"></script>
+<script type="text/javascript"
+        src="js/datatables/extras/TableTools/media/js/ZeroClipboard.min.js"></script>
+<!-- COOKIE -->
+<script type="text/javascript"
+        src="js/jQuery-Cookie/jquery.cookie.min.js"></script>
+<!-- CUSTOM SCRIPT -->
+<!-- CUSTOM SCRIPT -->
+<script src="js/script.js"></script>
+
+<script src="js/echarts-all.js"></script>
+<script src="js/jsAddress.js"></script>
+<!--  script src="js/jquery.min.js"></script> -->
+<script type="text/javascript" src="res/js/soapclient.js"></script>
+
+<script>
+    jQuery(document).ready(function() {
+        App.setPage("fjyh.html"); //Set current page
+        App.init(); //Initialise plugins and elements
+    });
+   
+    var myColor = ['#33DFEF', '#57C797', '#7FA7D8','#5FAD75','#a5d0bc'];
+    //获取福建省2016年数据
+    var lastYear = [2.6, 5.9, 9.0, 6.4,8.7, 3.7, 4.6, 7.2, 8.7, 1.8, 6.0, 2.3];
+    var thisYear = [2.0, 4.9, 7.0, 3.2, 5.6, 6.7, 5.6, 4.2, 3.6, 2.0, 6.4, 3.3];
+    var YoY = [0.09, 0.2, 0.3, 0.5, 0.3, -0.2, -0.3, 0.4, -0.2, -0.5, -0.40, -0.2]; //同比增长率
+    var MoM = [0.22, 0.15, 0.3, -0.5, 0.3, 0.2, -0.3, 0.8, -0.7, -0.55, -0.56, 0.8]; //环比增长率
+    var myChart,myChart1;
+
+    function fn(){
+    	 var obj=document.getElementById("cmbCity");
+         var obj1=document.getElementById("year");
+         var index = obj.selectedIndex; // 选中索引
+         var index1 = obj1.selectedIndex; // 选中索引
+         var text = obj.options[index].text; // 选中文本
+         var text1 = obj1.options[index1].text; // 选中文本
+         //var sid=years.value;
+         //alert(text1);
+         option.title.text='福建路网运行'+text+'统计量/月';
+         //option1.title.text='福建'+text+'统计量',
+         option.series[0].data=lastYear;
+         option.series[1].data=thisYear;
+         option.series[2].data=YoY;
+         option.series[3].data=MoM;
+         myChart.setOption(option);
+         option1.series[0].name=text1;
+         option1.series[1].name=text1-1;
+         option1.series[0].data=data2;
+         option1.series[1].data=data3;
+         myChart1.setOption(option1);
+    }
+
+    var month='';
+    var size=26;//设置月份字体大小
+    var data2=[{value:0},{value:0},{value:0},{value:0},{value:0}];
+    var data1=[
+    	  
+        {value:88, name:'计划性养护施工'},
+        {value:66, name:'交通事故'},
+        {value:67, name:'自然灾害'},
+        {value:35, name:'其他事件'}
+       
+    ];
+    var data4=[
+    	  
+        {value:38, name:'计划性养护施工'},
+        {value:26, name:'交通事故'},
+        {value:47, name:'自然灾害'},
+        {value:35, name:'其他事件'}
+    ];
+    var data2=[
+    	  
+        {value:38, name:'计划性养护施工'},
+        {value:36, name:'交通事故'},
+        {value:77, name:'自然灾害'},
+        {value:25, name:'其他事件'}
+    ];
+    var data3=[
+    	  
+        {value:68, name:'计划性养护施工'},
+        {value:26, name:'交通事故'},
+        {value:57, name:'自然灾害'},
+        {value:45, name:'其他事件'}
+    ];
+ 
+    var myChart = echarts.init(document.getElementById('map'));
+    var myChart1 = echarts.init(document.getElementById('map1'));
+
+    option1 = {
+        color: myColor,
+        title : {
+            text: '路网信息'+month+'统计',
+            //subtext: '纯属虚构',
+            x:'center',
+            textStyle: {
+                fontSize: size+2
+            }
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} 条({d}%)",
+            textStyle: {
+                fontSize: size
+            }
+        },
+        legend: {
+            orient: 'horizontal',
+            // left: '20%',
+            left: 'center',
+            bottom: '16%',
+            //width: 16,
+            itemWidth: 40,//图例标记的图形宽度
+            itemHeight: 20,//图例标记的图形高度
+            itemGap: 30,
+            y: 660,
+            textStyle: {
+                fontSize: size-4
+            },
+            data:['计划性养护施工','交通事故','自然灾害','其他事件']
+        },
+        calculable : true,
+        series : [
+            {
+                name:'2017年',
+                type:'pie',
+                radius :['50%','60%'],
+                center: ['50%', '50%'],
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: true,
+                            position: 'outer',
+                            formatter: "{b}",
+                            textStyle: {
+                                color: '#222',
+                                align: 'center',
+                                baseline: 'bottom',
+                                fontSize: size
+                            }
+                        },
+                        labelLine: {
+                            show: true,
+                            length: 40,
+                            lineStyle: {
+                                type: 'solid',
+                                width:2
+                                //shadowColor: 'rgba(0,0,0,0)',
+                                //shadowBlur: 5,
+                                //shadowOffsetY: 3,
+                            }
+                        }
+                    }
+                },
+                data:[
+                    {value:335, name:'计划性养护施工'},
+                    {value:310, name:'交通事故'},
+                    {value:334, name:'自然灾害'},
+                    {value:235, name:'其他事件'}
+                   
+                ]
+            },
+         
+            {
+                name:'2016年',
+                type:'pie',
+                radius :['30%','40%'],
+                center: ['50%', '50%'],
+                itemStyle : {
+                    normal : {
+                        label : {
+                            show : false
+                        },
+                        labelLine : {
+                            show : false
+                        }
+                    },
+                    emphasis : {
+                        label : {
+                            show : true,
+                            position : 'center',
+                            textStyle : {
+                                fontSize : '30',
+                                fontWeight : 'bold'
+                            }
+                        }
+                    }
+                },
+                data:[
+                	 {value:435, name:'计划性养护施工'},
+                     {value:340, name:'交通事故'},
+                     {value:434, name:'自然灾害'},
+                     {value:135, name:'其他事件'}
+                ]
+            }
+        ]
+    };
+    //myChart.setOption(option);
+
+    option = {
+        color: myColor,
+        title : {
+            text: '福建路网运行计划性施工统计量/月',
+            //subtext: '纯属虚构',
+            x:'center',
+            textStyle: {
+                fontSize: size+2
+            }
+        },
+        tooltip:{
+            trigger:'axis',
+            axisPointer:{
+                type:'shadow'
+            },
+            textStyle: {
+                fontSize: size
+            }
+        },
+        legend:{
+            data:['上年度','本年度','同比增长率','环比增长率'],
+            x:'center',
+            y:780,
+            itemWidth: 40,//图例标记的图形宽度
+            itemHeight: 20,//图例标记的图形高度
+            textStyle: {
+                fontSize: size-4
+            }
+        },
+        grid:{
+            top:'10%',
+            left:'3%',
+            right:'1%',
+            bottom:'55%',
+            containLabel:true
+        },
+        xAxis:[
+            {
+                gridIndex:0,
+                //name:'月份',
+                type:'category',
+                data : [
+                    {
+                        value:'1月',
+                        textStyle: {
+                            color: '#222',
+                            fontSize: size-4
+                        }
+                    },
+                    {
+                        value:'2月',
+                        textStyle: {
+                            color: '#222',
+                            fontSize: size-4
+                        }
+                    },
+                    {
+                        value:'3月',
+                        textStyle: {
+                            color: '#222',
+                            fontSize: size-4
+                        }
+                    },
+                    {
+                        value:'4月',
+                        textStyle: {
+                            color: '#222',
+                            fontSize: size-4
+                        }
+                    },
+                    {
+                        value:'5月',
+                        textStyle: {
+                            color: '#222',
+                            fontSize: size-4
+                        }
+                    },
+                    {
+                        value:'6月',
+                        textStyle: {
+                            color: '#222',
+                            fontSize: size-4
+                        }
+                    },
+                    {
+                        value:'7月',
+                        textStyle: {
+                            color: '#222',
+                            fontSize: size-4
+                        }
+                    },
+                    {
+                        value:'8月',
+                        textStyle: {
+                            color: '#222',
+                            fontSize: size-4
+                        }
+                    },
+                    {
+                        value:'9月',
+                        textStyle: {
+                            color: '#222',
+                            fontSize: size-4
+                        }
+                    },
+                    {
+                        value:'10月',
+                        textStyle: {
+                            color: '#222',
+                            fontSize: size-4
+                        }
+                    },
+                    {
+                        value:'11月',
+                        textStyle: {
+                            color: '#222',
+                            fontSize: size-4
+                        }
+                    },
+                    {
+                        value:'12月',
+                        textStyle: {
+                            color: '#222',
+                            fontSize: size-4
+                        }
+                    }
+                ],
+                nameLocation: 'start'
+            },
+            {
+                gridIndex:1,
+                type:'category',
+                data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+                show: false,
+                axisLine: {
+                    lineStyle: {
+                        color: '#222'
+                    }
+                }
+            }
+        ],
+        yAxis:[
+            {
+                gridIndex:0,
+                name: '数量/条',
+                type:'value',
+                min:0,
+                max:20,
+                nameTextStyle: {
+                    color: '#222',
+                    fontSize: size
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#222'
+                    }
+                }
+            },
+            {
+                name: '增长率/%',
+                gridIndex:1,
+                type:'value',
+                min:-20,
+                max:10,
+                nameTextStyle: {
+                    color: '#222',
+                    fontSize: size
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#222'
+                    }
+                }
+            }
+        ],
+        series:[
+            {
+                name: '上年度',
+                type: 'bar',
+                xAxisIndex:0,
+                yAxisIndex:0,
+                //stack: 'one',
+                data:[2,5,6,7,8,3,5,3,1,7,5,8]
+            },
+            {
+                name: '本年度',
+                type: 'bar',
+                xAxisIndex:0,
+                yAxisIndex:0,
+                //stack: 'two',
+                data:[1,2,3,4,5,6,8,4,6,2,9,4]//function()
+            },
+            {
+                name: '同比增长率',
+                type: 'bar',
+                xAxisIndex:1,
+                yAxisIndex:1,
+                //stack: 'one',
+                data:[0.1,0.2,0.3,0.4,0.5,0.6,0.8,0.4,0.6,0.2,0.09,0.4]
+            },
+            {
+                name: '环比增长率',
+                type: 'bar',
+                xAxisIndex:1,
+                yAxisIndex:1,
+                //	stack: 'two',
+                data:[0.2,-0.5,0.6,-0.7,0.8,0.3,0.5,-0.3,0.1,0.7,0.5,0.8]
+            }
+        ]
+    };
+
+    myChart.setOption(option);
+    myChart1.setOption(option1);
+
+    myChart.on('click', function (param){
+        console.log(param.name);
+        var obj=document.getElementById("cmbCity");
+        var index = obj.selectedIndex; // 选中索引
+        var text = obj.options[index].text; // 选中文本
+        month=param.name;
+        //text: '福建养护工程'+month+'固定资产占比',
+        option1.title.text='福建'+text+'路网运行'+month+'',
+            option1.series[0].data=data1;//if(param.name==="1月"&&param.seriesIndex===0){
+        option1.series[2].data=data4;
+        myChart1.setOption(option1);
+        //console.log(param.seriesIndex);}
+    });
+
+</script>
+<!-- /JAVASCRIPTS -->
+</body>
+
+</html>

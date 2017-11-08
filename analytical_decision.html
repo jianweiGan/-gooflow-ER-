@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>综合分析辅助决策平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" type="text/css" href="css/cloud-admin.css">
+    <link rel="stylesheet" type="text/css" href="css/themes/default.css" id="skin-switcher">
+    <link rel="stylesheet" type="text/css" href="css/responsive.css">
+    <!-- STYLESHEETS -->
+    <!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- ANIMATE -->
+    <link rel="stylesheet" type="text/css" href="css/animatecss/animate.min.css" />
+    <!-- DATE RANGE PICKER -->
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+    <!-- TODO -->
+    <link rel="stylesheet" type="text/css" href="js/jquery-todo/css/styles.css" />
+    <!-- FULL CALENDAR -->
+    <link rel="stylesheet" type="text/css" href="js/fullcalendar/fullcalendar.min.css" />
+    <!-- GRITTER -->
+    <link rel="stylesheet" type="text/css" href="js/gritter/css/jquery.gritter.css" />
+    <!-- FONTS -->
+    <!--link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'-->
+</head>
+
+<body style="overflow:-Scroll;overflow-y:hidden">
+<!-- HEADER -->
+<header class="navbar clearfix" id="header">
+    <div class="container">
+        <div class="navbar-brand">
+            <!-- COMPANY LOGO -->
+            <a href="index.html">
+                <img src="img/logo/logo.png" alt="Cloud Admin Logo" class="img-responsive" height="30" width="120">
+            </a>
+            <!-- /COMPANY LOGO -->
+            <!-- TEAM STATUS FOR MOBILE -->
+            <div class="visible-xs">
+                <a href="#" class="team-status-toggle switcher btn dropdown-toggle">
+                    <i class="fa fa-users"></i>
+                </a>
+            </div>
+            <!-- /TEAM STATUS FOR MOBILE -->
+            <!-- SIDEBAR COLLAPSE -->
+            <div id="sidebar-collapse" class="sidebar-collapse btn">
+                <i class="fa fa-bars" data-icon1="fa fa-bars" data-icon2="fa fa-bars"></i>
+            </div>
+            <!-- /SIDEBAR COLLAPSE -->
+        </div>
+        <!-- NAVBAR LEFT -->
+        <ul class="nav navbar-nav pull-left hidden-xs" id="navbar-left">
+            <li class="dropdown">
+                <a href="#" class="team-status-toggle dropdown-toggle tip-bottom" data-toggle="tooltip" title="获取服务器状态">
+                    <i class="fa fa-archive fa-fw"></i>
+                    <span class="name">服务器状态</span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-cog"></i>
+                    <span class="name">皮肤</span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu skins">
+                    <li class="dropdown-title">
+                        <span><i class="fa fa-leaf"></i>主题皮肤</span>
+                    </li>
+                    <li>
+                        <a href="#" data-skin="default">默认</a>
+                    </li>
+                    <li>
+                        <a href="#" data-skin="night">暗影</a>
+                    </li>
+                    <li>
+                        <a href="#" data-skin="earth">大地</a>
+                    </li>
+                    <li>
+                        <a href="#" data-skin="utopia">乌托邦</a>
+                    </li>
+                    <li>
+                        <a href="#" data-skin="nature">自然</a>
+                    </li>
+                    <li>
+                        <a href="#" data-skin="graphite">石墨</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- /NAVBAR LEFT -->
+        <!-- BEGIN TOP NAVIGATION MENU -->
+        <ul class="nav navbar-nav pull-right">
+            <!-- BEGIN NOTIFICATION DROPDOWN -->
+            <li class="dropdown" id="header-notification">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-bell"></i>
+                    <span class="badge">7</span>
+                </a>
+                <ul class="dropdown-menu notification">
+                    <li class="dropdown-title">
+                        <span><i class="fa fa-bell"></i>您当前有4份通知</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-success"><i class="fa fa-user"></i></span>
+                            <span class="body">
+                                        <span class="message">当前3位用户在线 </span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>刚刚</span>
+                                    </span>
+                                    </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-primary"><i class="fa fa-comment"></i></span>
+                            <span class="body">
+                                        <span class="message">赵广提交ETL任务</span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>19分钟前</span>
+                                    </span>
+                                    </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-warning"><i class="fa fa-lock"></i></span>
+                            <span class="body">
+                                        <span class="message">DW1 服务器锁定</span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>32分钟前</span>
+                                    </span>
+                                    </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-warning"><i class="fa fa-exclamation-triangle"></i></span>
+                            <span class="body">
+                                        <span class="message">Oracle11g 连接超时</span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>6 小时前</span>
+                                    </span>
+                                    </span>
+                        </a>
+                    </li>
+                    <li class="footer">
+                        <a href="#">详情 <i class="fa fa-arrow-circle-right"></i></a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END NOTIFICATION DROPDOWN -->
+            <!-- BEGIN INBOX DROPDOWN -->
+            <li class="dropdown" id="header-message">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge">3</span>
+                </a>
+                <ul class="dropdown-menu inbox">
+                    <li class="dropdown-title">
+                        <span><i class="fa fa-envelope-o"></i>您有3条未读信息</span>
+                        <span class="compose pull-right tip-right" title="编辑信息"><i class="fa fa-pencil-square-o"></i></span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="img/avatars/1.jpg" alt="" />
+                            <span class="body">
+                                        <span class="from">刘丹</span>
+                                    <span class="message">
+                                        </span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>刚刚</span>
+                                    </span>
+                                    </span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="img/avatars/dengyuqiao.jpg" alt="" />
+                            <span class="body">
+                                        <span class="from">邓钰桥</span>
+                                    <span class="message">
+                                        </span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>15分钟前</span>
+                                    </span>
+                                    </span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="img/avatars/guochangqing.jpg" alt="" />
+                            <span class="body">
+                                        <span class="from">郭长青</span>
+                                    <span class="message">
+                                        </span>
+                                    <span class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <span>2小时前</span>
+                                    </span>
+                                    </span>
+
+                        </a>
+                    </li>
+                    <li class="footer">
+                        <a href="#">查看消息详情 <i class="fa fa-arrow-circle-right"></i></a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END INBOX DROPDOWN -->
+            <!-- BEGIN TODO DROPDOWN -->
+            <li class="dropdown" id="header-tasks">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-tasks"></i>
+                    <span class="badge">3</span>
+                </a>
+                <ul class="dropdown-menu tasks">
+                    <li class="dropdown-title">
+                        <span><i class="fa fa-check"></i> 6份任务进程中</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                                    <span class="header clearfix">
+                                        <span class="pull-left">数据库日常更新</span>
+                                    <span class="pull-right">60%</span>
+                                    </span>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                    <span class="sr-only">60% Complete</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                                    <span class="header clearfix">
+                                        <span class="pull-left">账户安全系统升级中</span>
+                                    <span class="pull-right">25%</span>
+                                    </span>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                                    <span class="sr-only">25% Complete</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                                    <span class="header clearfix">
+                                        <span class="pull-left">数据抽取任务12</span>
+                                    <span class="pull-right">40%</span>
+                                    </span>
+                            <div class="progress progress-striped">
+                                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                                    <span class="sr-only">40% Complete</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                                    <span class="header clearfix">
+                                        <span class="pull-left">数据抽取任务13</span>
+                                    <span class="pull-right">70%</span>
+                                    </span>
+                            <div class="progress progress-striped active">
+                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">
+                                    <span class="sr-only">70% Complete</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                                    <span class="header clearfix">
+                                        <span class="pull-left">调度计划7</span>
+                                    <span class="pull-right">65%</span>
+                                    </span>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" style="width: 35%">
+                                    <span class="sr-only">35% Complete (success)</span>
+                                </div>
+                                <div class="progress-bar progress-bar-warning" style="width: 20%">
+                                    <span class="sr-only">20% Complete (warning)</span>
+                                </div>
+                                <div class="progress-bar progress-bar-danger" style="width: 10%">
+                                    <span class="sr-only">10% Complete (danger)</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="footer">
+                        <a href="#">查看所有任务<i class="fa fa-arrow-circle-right"></i></a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END TODO DROPDOWN -->
+            <!-- BEGIN USER LOGIN DROPDOWN -->
+            <li class="dropdown user" id="header-user">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img alt="" src="img/avatars/zhangwei.jpg" />
+                    <span class="username">张伟</span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#"><i class="fa fa-user"></i>头像设置</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-cog"></i> 账户设置</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-eye"></i> 隐私设置</a>
+                    </li>
+                    <li>
+                        <a href="login.html"><i class="fa fa-power-off"></i> 登出</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END USER LOGIN DROPDOWN -->
+        </ul>
+        <!-- END TOP NAVIGATION MENU -->
+    </div>
+    <!-- TEAM STATUS -->
+    <div class="container team-status" id="team-status">
+        <div id="scrollbar">
+            <div class="handle">
+            </div>
+        </div>
+        <div id="teamslider">
+            <ul class="team-list">
+                <li class="current">
+                    <a href="javascript:void(0);">
+                                <span class="image">
+                      <img src="img/avatars/zhangwei.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    你
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 35%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 20%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 10%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">6</span>已完成
+                                <span class="pull-right fa fa-check"></span>
+                </div>
+                <div class="field">
+                    <span class="badge badge-orange">3</span>进程中
+                    <span class="pull-right fa fa-adjust"></span>
+                </div>
+                <div class="field">
+                    <span class="badge badge-red">1</span> 待定
+                    <span class="pull-right fa fa-list-ul"></span>
+                </div>
+                </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                        <span class="image">
+                      <img src="img/avatars/xinghui.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    邢辉
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 15%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 40%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 20%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">2</span> 已完成
+                        <span class="pull-right fa fa-check"></span>
+            </div>
+            <div class="field">
+                <span class="badge badge-orange">8</span> 进程中
+                <span class="pull-right fa fa-adjust"></span>
+            </div>
+            <div class="field">
+                <span class="badge badge-red">4</span> 待定
+                <span class="pull-right fa fa-list-ul"></span>
+            </div>
+            </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                    <span class="image">
+                      <img src="img/avatars/zhangjinhai.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    张金海
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 65%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 10%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 15%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">10</span> 已完成
+                    <span class="pull-right fa fa-check"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-orange">3</span> 进程中
+                        <span class="pull-right fa fa-adjust"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-red">4</span> 待定
+                        <span class="pull-right fa fa-list-ul"></span>
+                    </div>
+                    </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                    <span class="image">
+                      <img src="img/avatars/zhaoguang.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    赵广
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 5%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 48%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 27%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">1</span> 已完成
+                    <span class="pull-right fa fa-check"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-orange">6</span> 进程中
+                        <span class="pull-right fa fa-adjust"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-red">2</span> 待定
+                        <span class="pull-right fa fa-list-ul"></span>
+                    </div>
+                    </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                    <span class="image">
+                      <img src="img/avatars/dengyuqiao.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    邓钰桥
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 21%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 20%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 40%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">4</span> 已完成
+                    <span class="pull-right fa fa-check"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-orange">5</span> 进程中
+                        <span class="pull-right fa fa-adjust"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-red">9</span> 待定
+                        <span class="pull-right fa fa-list-ul"></span>
+                    </div>
+                    </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                    <span class="image">
+                      <img src="img/avatars/guochangqing.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    郭长青
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 45%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 21%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 10%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">6</span> 已完成
+                    <span class="pull-right fa fa-check"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-orange">3</span> 进程中
+                        <span class="pull-right fa fa-adjust"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-red">1</span> 待定
+                        <span class="pull-right fa fa-list-ul"></span>
+                    </div>
+                    </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                    <span class="image">
+                      <img src="img/avatars/wangqianwei.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    王前炜
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 7%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 30%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 10%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">1</span> 已完成
+                    <span class="pull-right fa fa-check"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-orange">6</span> 进程中
+                        <span class="pull-right fa fa-adjust"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-red">2</span> 待定
+                        <span class="pull-right fa fa-list-ul"></span>
+                    </div>
+                    </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">
+                    <span class="image">
+                      <img src="img/avatars/avatar8.jpg" alt="" />
+                  </span>
+                        <span class="title">
+                    邢辉
+                  </span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" style="width: 70%">
+                                <span class="sr-only">35% Complete (success)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 20%">
+                                <span class="sr-only">20% Complete (warning)</span>
+                            </div>
+                            <div class="progress-bar progress-bar-danger" style="width: 5%">
+                                <span class="sr-only">10% Complete (danger)</span>
+                            </div>
+                        </div>
+                        <span class="status">
+                        <div class="field">
+                            <span class="badge badge-green">13</span> 已完成
+                    <span class="pull-right fa fa-check"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-orange">7</span> 进程中
+                        <span class="pull-right fa fa-adjust"></span>
+                    </div>
+                    <div class="field">
+                        <span class="badge badge-red">1</span> 待定
+                        <span class="pull-right fa fa-list-ul"></span>
+                    </div>
+                    </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /TEAM STATUS -->
+</header>
+<!--/HEADER -->
+<!-- PAGE -->
+<section id="page">
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar" style="height: 973px;">
+        <div class="sidebar-menu nav-collapse">
+            <div class="divide-20"></div>
+            <!-- SEARCH BAR -->
+            <div id="search-bar">
+                <input class="search" type="text" placeholder="搜索"><i class="fa fa-search search-icon"></i>
+            </div>
+            <!-- /SEARCH BAR -->
+
+            <!-- SIDEBAR QUICK-LAUNCH -->
+            <!-- <div id="quicklaunch">
+                <!-- /SIDEBAR QUICK-LAUNCH -->
+
+            <!-- SIDEBAR MENU -->
+            <ul>
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">主页</span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+                <li class="has-sub">
+                    <a href="DataResourceManagementPlatform.html" class="">
+                        <i class="fa fa-certificate fa-fw"></i> <span class="menu-text">数据资源管理平台</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        <li class="has-sub-sub">
+                            <a href="javascript:;" class=""><span class="sub-menu-text">数据监控管理系统</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-sub">
+                                <li>
+                                    <a class="" href="DataTransferConfig.html"><span class="sub-menu-text">数据交换配置</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="DataTransferMonitor.html"><span class="sub-menu-text">数据交换监控管理</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="DataAuditManagement.html"><span class="sub-menu-text">数据审计管理</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="" href="DataQualityControl.html"><span class="sub-menu-text">数据质量管控系统</span></a>
+                        </li>
+                        <li>
+                            <a class="" href="DataQualityControl.html"><span class="sub-menu-text">数据资源共享交换系统</span></a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="has-sub">
+                    <a href="GISOperation.html" class="">
+                        <i class="fa fa-table fa-fw"></i> <span class="menu-text">GIS分析展示平台</span>
+                    </a>
+                </li>
+                <li class="has-sub active">
+                    <a href="analytical_decision.html" class="">
+                        <i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">综合分析辅助决策平台</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        <li class="has-sub-sub">
+                            <a href="javascript:;" class=""><span class="sub-menu-text">公路建设分析系统</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-sub">
+                                <li>
+                                    <a class="" href="investment-time.html"><span class="sub-sub-menu-text">时间维度分析</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="investment-space.html"><span class="sub-sub-menu-text">空间维度分析</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-sub-sub">
+                            <a href="javascript:;" class=""><span class="sub-menu-text">公路养护分析系统</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-sub">
+                                <li>
+                                    <a class="" href="fjyh_time_dimension.html"><span class="sub-sub-menu-text">时间维度分析</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="fjyh_space_dimension.html"><span class="sub-sub-menu-text">空间维度分析</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-sub-sub">
+                            <a href="javascript:;" class=""><span class="sub-menu-text">路政管理分析系统</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-sub">
+                                <li class="has-sub-sub">
+                                    <a href="javascript:;" class=""><span class="sub-menu-text">路政许可</span>
+                                        <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-sub">
+                                        <li>
+                                            <a class="" href="permission_time.html"><span class="sub-sub-menu-text">时间维度分析</span></a>
+                                        </li>
+                                        <li>
+                                            <a class="" href="permission_area.html"><span class="sub-sub-menu-text">空间维度分析</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="" href="compensation.html"><span class="sub-sub-menu-text">路损赔偿</span></a>
+                                </li>
+                                <li class="has-sub-sub">
+                                    <a href="javascript:;" class=""><span class="sub-menu-text">函告案件</span>
+                                        <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-sub">
+                                        <li>
+                                            <a class="" href="case_time.html"><span class="sub-sub-menu-text">时间维度分析</span></a>
+                                        </li>
+                                        <li>
+                                            <a class="" href="case_area.html"><span class="sub-sub-menu-text">空间维度分析</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-sub-sub">
+                            <a href="javascript:" class=""><span class="sub-menu-text">应急管理分析系统</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-sub">
+                                <li>
+                                    <a class="" href="emergencyManagement.html"><span class="sub-sub-menu-text">统计展示</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="emergencyManagement_GIS.html"><span class="sub-sub-menu-text">GIS地图展示</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-sub-sub">
+                            <a href="javascript:" class=""><span class="sub-menu-text">路网运行分析系统</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-sub">
+                                <li>
+                                    <a class="" href="road_run.html"><span class="sub-sub-menu-text">运行情况</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="road_report.html"><span class="sub-sub-menu-text">接报情况</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="road_call.html"><span class="sub-sub-menu-text">话务量分布</span></a>
+                                </li>
+                                <li >
+                                    <a class="" href="Record_Message.html"><span class="sub-sub-menu-text">平台录入信息来源分布</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="Recive_events.html"><span class="sub-sub-menu-text">接报事件通行影响分布</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="Recive_events_cause.html"><span class="sub-sub-menu-text">接报事件原因分布</span></a>
+                                </li>
+                                <li>
+                                    <a class="" href="Receive_Message_Time.html"><span class="sub-sub-menu-text">接报信息时间分布</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="has-sub">
+                    <a href="javascript:;" class="">
+                        <i class="fa fa-table fa-fw"></i> <span class="menu-text">用户管理平台</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        <li>
+                            <a class="" href="UserInfoManagement.html"><span class="sub-menu-text">用户信息管理</span></a>
+                        </li>
+                        <li>
+                            <a class="" href="UserRoleManagement.html"><span class="sub-menu-text">用户角色管理</span></a>
+                        </li>
+                        <li>
+                            <a class="" href="UserRightManagement.html"><span class="sub-menu-text">用户权限管理</span></a>
+                        </li>
+                        <li>
+                            <a class="" href="AdministratorList.html"><span class="sub-menu-text">管理员列表</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="has-sub">
+
+                </li>
+            </ul>
+            <!-- /SIDEBAR MENU -->
+        </div>
+    </div>
+    <!-- /SIDEBAR -->
+    <div id="main-content">
+        <!-- SAMPLE BOX CONFIGURATION MODAL FORM-->
+        <div class="modal fade" id="box-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Box Settings</h4>
+                    </div>
+                    <div class="modal-body">
+                        Here goes box setting content.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /SAMPLE BOX CONFIGURATION MODAL FORM-->
+        <div class="container">
+            <div class="row">
+                <div id="content" class="col-lg-12"  style="background-color: white; height: 900px;">
+                    <!-- PAGE HEADER-->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div style="height: 50px;">
+                                <!-- STYLER -->
+
+                                <!-- /STYLER -->
+                                <!-- BREADCRUMBS -->
+                                <ul class="breadcrumb" style="height: 50px;">
+                                    <li>
+                                        <i class="fa fa-home"></i>
+                                        <a href="index.html">主页</a>
+                                    </li>
+                                    <li>综合分析辅助决策平台</li>
+                                </ul>
+                                <!-- /BREADCRUMBS -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /PAGE HEADER -->
+                    <!-- DASHBOARD CONTENT -->
+                    <div class="row" style="height: 370px;width: 100%;">
+                        <div class="col-md-4">
+                            <!-- BOX -->
+                            <div class="box border orange">
+                                <div class="box-title">
+                                    <h4><i class="fa fa-adjust"></i>公路建设分析系统-福建省各类型固定资产投资占比</h4>
+                                </div>
+                                <div class="box-body" style="width: 100%;height: 370px;" id="part1">
+                                </div>
+                            </div>
+                            <!-- /BOX -->
+                        </div>
+                        <div class="col-md-4">
+                            <!-- BOX -->
+                            <div class="box border pink">
+                                <div class="box-title">
+                                    <h4><i class="fa fa-adjust"></i>公路养护分析系统-福建省五大养护工程占比</h4>
+                                </div>
+                                <div class="box-body" style="width: 100%;height: 370px;" id="part2">
+                                </div>
+                            </div>
+                            <!-- /BOX -->
+                        </div>
+                        <div class="col-md-4">
+                            <!-- BOX -->
+                            <div class="box border primary">
+                                <div class="box-title">
+                                    <h4><i class="fa fa-adjust"></i>路政管理分析系统-福建省路政许可各类型占比</h4>
+                                </div>
+                                <div class="box-body" style="width: 100%;height: 370px;" id="part3">
+                                </div>
+                            </div>
+                            <!-- /BOX -->
+                        </div>
+                    </div>
+                    <div class="row" style="width:100%;height: 420px;">
+                    	<div class="col-md-6">
+                            <!-- BOX -->
+                            <div class="box border purple">
+                                <div class="box-title">
+                                    <h4><i class="fa fa-signal"></i>应急管理分析系统-福建省2016年各地市应急事件</h4>
+
+                                </div>
+                                <div class="box-body" id="part5" style="width: 100%;height: 420px;"></div>
+                            </div>
+                            <!-- /BOX -->
+                        </div>
+                        <div class="col-md-6">
+                            <!-- BOX -->
+                            <div class="box border green">
+                                <div class="box-title">
+                                    <h4><i class="fa fa-signal"></i>路网运行分析系统-福建省2016年及上年度话务量月度分布</h4>
+
+                                </div>
+                                <div class="box-body" id="part4" style="width: 100%;height: 420px;"></div>
+                            </div>
+                            <!-- /BOX -->
+                        </div>
+                    </div>
+                </div>
+                <!-- /CONTENT-->
+            </div>
+        </div>
+    </div>
+</section>
+<!--/PAGE -->
+<!-- JAVASCRIPTS -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- JQUERY -->
+<script src="js/jquery/jquery-2.0.3.min.js"></script>
+<!-- JQUERY UI-->
+<script src="js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+<!-- BOOTSTRAP -->
+<script src="bootstrap-dist/js/bootstrap.min.js"></script>
+
+<!-- DATE RANGE PICKER -->
+<script src="js/bootstrap-daterangepicker/moment.min.js"></script>
+
+<script src="js/bootstrap-daterangepicker/daterangepicker.min.js"></script>
+<!-- SLIMSCROLL -->
+<script type="text/javascript" src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script>
+<!-- SLIMSCROLL -->
+<script type="text/javascript" src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
+<!-- BLOCK UI -->
+<script type="text/javascript" src="js/jQuery-BlockUI/jquery.blockUI.min.js"></script>
+<!-- SPARKLINES -->
+<script type="text/javascript" src="js/sparklines/jquery.sparkline.min.js"></script>
+<!-- EASY PIE CHART -->
+<script src="js/jquery-easing/jquery.easing.min.js"></script>
+<script type="text/javascript" src="js/easypiechart/jquery.easypiechart.min.js"></script>
+<!-- FLOT CHARTS -->
+<script src="js/flot/jquery.flot.min.js"></script>
+<script src="js/flot/jquery.flot.time.min.js"></script>
+<script src="js/flot/jquery.flot.selection.min.js"></script>
+<script src="js/flot/jquery.flot.resize.min.js"></script>
+<script src="js/flot/jquery.flot.pie.min.js"></script>
+<script src="js/flot/jquery.flot.stack.min.js"></script>
+<script src="js/flot/jquery.flot.crosshair.min.js"></script>
+<!-- TODO -->
+<script type="text/javascript" src="js/jquery-todo/js/paddystodolist.js"></script>
+<!-- TIMEAGO -->
+<script type="text/javascript" src="js/timeago/jquery.timeago.min.js"></script>
+<!-- FULL CALENDAR -->
+<script type="text/javascript" src="js/fullcalendar/fullcalendar.min.js"></script>
+<!-- COOKIE -->
+<script type="text/javascript" src="js/jQuery-Cookie/jquery.cookie.min.js"></script>
+<!-- GRITTER -->
+<script type="text/javascript" src="js/gritter/js/jquery.gritter.min.js"></script>
+<!-- CUSTOM SCRIPT -->
+<script src="js/script.js"></script>
+<script src="js/echarts.min.js"></script>
+<script type="text/javascript" src="js/dataRequest.js"></script>
+<script type="text/javascript" src="res/js/soapclient.js"></script>
+<script>
+    jQuery(document).ready(function() {
+        App.setPage("permission_timev1"); //Set current page
+        App.init(); //Initialise plugins and elements
+    });
+    //document.getElementById('road').style.display = none;
+    // 基于准备好的dom，初始化echarts实例
+    var chart1 = echarts.init(document.getElementById("part1"));
+    var chart2 = echarts.init(document.getElementById("part2"));
+    var chart3 = echarts.init(document.getElementById("part3"));
+    var chart4 = echarts.init(document.getElementById("part4"));
+    var chart5 = echarts.init(document.getElementById("part5"));
+    var option3 = {
+        baseOption: {
+            timeline: {
+                itemStyle: {
+                    normal: {
+                    }
+                },
+                checkpointStyle: {
+                    color: 'red'
+                },
+                // y: 0,
+                axisType: 'category',
+                // realtime: false,
+                // loop: false,
+                autoPlay: true,
+                // currentIndex: 2,
+                playInterval: 3000,
+                // controlStyle: {
+                //     position: 'left'
+                // },
+                data: [
+                    '2014','2015','2016'
+                ]
+            },
+            title: {
+                x: 'center',
+                textStyle: {
+                    fontSize: 28
+                },
+            },
+            tooltip: {
+                textStyle: {
+                    fontSize: 22
+                },
+            },
+            series: [
+                {
+                    name: '投资类型',
+                    type: 'pie',
+                    radius: ['28%','48%'],
+                    color :['#B8D9BC','#F3C83B','#ECBD65','#ADCD9E','#CBBE87','#A7C271','#AEC03A','#8DA8C9','#8CAF99','#8FAA5B','#9D9924','#6E8DC7'],
+                    label: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 16,
+                                color: "#5e87b0"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        options: [
+            {
+                title: {text: ''},
+                series: [
+                    {
+                        data: [
+                            {value:791,name:'路面改造'},
+                            {value:894,name:'国省道建设'},
+                            {value:648,name:'农村路网'},
+                            {value:765,name:'危桥改造'},
+                            {value:685,name:'撤渡建桥'},
+                            {value:545,name:'其他投资公路项目'}
+                        ]
+                    }
+                ]
+            },
+            {
+                title: {text: ''},
+                series: [
+                    {
+                        data: [
+                            {value:679,name:'路面改造'},
+                            {value:935,name:'国省道建设'},
+                            {value:748,name:'农村路网'},
+                            {value:535,name:'危桥改造'},
+                            {value:635,name:'撤渡建桥'},
+                            {value:302,name:'其他投资公路项目'}
+                        ]
+                    }
+                ]
+            },
+            {
+                title : {text: ''},
+                series : [
+                    {
+                        data: [
+                            {value:679,name:'路面改造'},
+                            {value:335,name:'国省道建设'},
+                            {value:748,name:'农村路网'},
+                            {value:335,name:'危桥改造'},
+                            {value:335,name:'撤渡建桥'},
+                            {value:102,name:'其他投资公路项目'}
+                        ]
+                    }
+                ]
+            }
+        ]
+    };
+    var option4 = {
+
+        baseOption: {
+            timeline: {
+                itemStyle: {
+                    normal: {
+                    }
+                },
+                checkpointStyle: {
+                    color: 'red'
+                },
+                // y: 0,
+                axisType: 'category',
+                // realtime: false,
+                // loop: false,
+                autoPlay: true,
+                // currentIndex: 2,
+                playInterval: 3000,
+                // controlStyle: {
+                //     position: 'left'
+                // },
+                data: [
+                    '2014','2015','2016'
+                ]
+            },
+            title: {
+                x: 'center',
+                textStyle: {
+                    fontSize: 28
+                },
+            },
+            tooltip: {
+                textStyle: {
+                    fontSize: 22
+                },
+            },
+            series: [
+                {
+                    name: '投资类型',
+                    type: 'pie',
+                    color :['#82AFD8','#db5e8c','#BAA9E2','#A8D9E5','#67F1A7','#81C3D8','#EF609E','#ED5450','#3F4451','#838383'],
+                    radius: ['28%','48%'],
+                    label: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 16,
+                                color: "#5e87b0"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        options: [
+            {
+                title: {text: ''},
+                series: [
+                    {
+                        data: [
+                            {value:88, name:'绿化工程'},
+                            {value:66, name:'环保工程'},
+                            {value:67, name:'安保工程'},
+                            {value:35, name:'集镇整治'},
+                            {value:48, name:'其它整治'}
+                        ]
+                    }
+                ]
+            },
+            {
+                title: {text: ''},
+                series: [
+                    {
+                        data: [
+                            {value:55, name:'绿化工程'},
+                            {value:68, name:'环保工程'},
+                            {value:44, name:'安保工程'},
+                            {value:85, name:'集镇整治'},
+                            {value:90, name:'其它整治'}
+                        ]
+                    }
+                ]
+            },
+            {
+                title : {text: ''},
+                series : [
+                    {
+                        data: [
+                            {value:15, name:'绿化工程'},
+                            {value:78, name:'环保工程'},
+                            {value:34, name:'安保工程'},
+                            {value:65, name:'集镇整治'},
+                            {value:80, name:'其它整治'}
+                        ]
+                    }
+                ]
+            }
+        ]
+    };
+    var option5 = {
+
+        baseOption: {
+            timeline: {
+                itemStyle: {
+                    normal: {
+                    }
+                },
+                checkpointStyle: {
+                    color: 'red'
+                },
+                // y: 0,
+                axisType: 'category',
+                // realtime: false,
+                // loop: false,
+                autoPlay: true,
+                // currentIndex: 2,
+                playInterval: 3000,
+                // controlStyle: {
+                //     position: 'left'
+                // },
+                data: [
+                    '2014','2015','2016'
+                ]
+            },
+            title: {
+                x: 'center',
+                textStyle: {
+                    fontSize: 28
+                },
+            },
+            tooltip: {
+                textStyle: {
+                    fontSize: 22
+                },
+            },
+            series: [
+                {
+                    name: '许可类型',
+                    type: 'pie',
+                    color :['#B8D9BC','#F3C83B','#ECBD65','#ADCD9E','#CBBE87','#7FBFC8','#88B491','#589CA5','#2B6D90','#5E8D79','#496D69','#445245'],
+                    radius: ['28%','48%'],
+                    label: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: 16,
+                                color: "#5e87b0"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        options: [
+            {
+                title: {text: ''},
+                series: [
+                    {
+                        data: [
+                            {value:11, name:'国省道改线'},
+                            {value:3, name:'占用挖掘'},
+                            {value:3, name:'穿跨越管线'},
+                            {value:3, name:'埋设管线'},
+                            {value:3, name:'其他'},
+                            {value:12, name:'超限运输'},
+                            {value:8, name:'更新砍伐树木'},
+                            {value:12, name:'增设平交道口'},
+                            {value:18, name:'建(构)筑物'},
+                            {value:3, name:'分流或中断交通'},
+                            {value:13, name:'非标'},
+
+                        ]
+                    }
+                ]
+            },
+            {
+                title: {text: ''},
+                series: [
+                    {
+                        data: [
+                            {value:11, name:'国省道改线'},
+                            {value:23, name:'占用挖掘'},
+                            {value:13, name:'穿跨越管线'},
+                            {value:3, name:'埋设管线'},
+                            {value:3, name:'其他'},
+                            {value:12, name:'超限运输'},
+                            {value:8, name:'更新砍伐树木'},
+                            {value:12, name:'增设平交道口'},
+                            {value:18, name:'建(构)筑物'},
+                            {value:3, name:'分流或中断交通'},
+                            {value:13, name:'非标'},
+                        ]
+                    }
+                ]
+            },
+            {
+                title : {text: ''},
+                series : [
+                    {
+                        data: [
+                            {value:11, name:'国省道改线'},
+                            {value:2, name:'占用挖掘'},
+                            {value:13, name:'穿跨越管线'},
+                            {value:3, name:'埋设管线'},
+                            {value:3, name:'其他'},
+                            {value:12, name:'超限运输'},
+                            {value:8, name:'更新砍伐树木'},
+                            {value:12, name:'增设平交道口'},
+                            {value:18, name:'建(构)筑物'},
+                            {value:3, name:'分流或中断交通'},
+                            {value:11, name:'非标'},
+                        ]
+                    }
+                ]
+            }
+        ]
+    };
+    var xdata = {
+        year:[
+            {value: '1月', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2月', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '3月', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '4月', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '5月', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '6月', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '7月', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '8月', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '9月', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '10月', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '11月', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '12月', textStyle: {color: '#222222', fontSize: 16}}
+        ],
+        latestFiveYears:[
+            {value: '2013年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2014年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2015年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2016年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2017年', textStyle: {color: '#222222', fontSize: 16}},
+        ],
+        latestTenYears:[
+            {value: '2008年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2009年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2010年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2011年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2012年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2013年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2014年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2015年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2016年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2017年', textStyle: {color: '#222222', fontSize: 16}},
+        ],
+        latestTwentyYears:[
+            {value: '1998年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '1999年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2000年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2001年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2002年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2003年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2004年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2005年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2006年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2007年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2008年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2009年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2010年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2011年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2012年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2013年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2014年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2015年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2016年', textStyle: {color: '#222222', fontSize: 16}},
+            {value: '2017年', textStyle: {color: '#222222', fontSize: 16}},
+        ]
+    };
+    var myColor = ['#5E87B0','#B6DDD8','#A696CE','#99C5D1','#66DD94','#70AFC4','#DB5E8C','#D9534F','#2D323D','#6F6F6F'];
+    var max=44;//
+    var currentYear = 2016;
+    var currentArea = '福建省';
+    var affairType = '话务量分布量';
+    var timeType = '按月度';
+    var dataMonths = {
+        2017: [22, 18, 19, 26, 18, 18, 23, 27, 28, 18, 16, 22],
+        2016: [16, 10, 17, 23, 25, 26, 35, 42, 32, 20, 26, 13],
+        2015: [28, 12, 20, 10, 12, 21, 21, 20, 28, 12, 16, 10],
+        2014: [12, 14, 27, 23, 25, 26, 25, 42, 32, 20, 26, 13],
+        2013: [13, 14, 7, 23, 25, 36, 35, 42, 32, 26, 10, 23],
+        2012: [12, 24, 7, 33, 15, 26, 15, 32, 22, 28, 26, 15],
+        2011: [22, 18, 7, 23, 25, 36, 35, 42, 12, 20, 16, 23],
+        2010: [22, 22, 27, 23, 25, 26, 22, 12, 29, 22, 22, 21],
+        2009: [22, 32, 29, 23, 25, 36, 25, 21, 22, 20, 14, 32],
+        2008: [2, 4, 7, 23, 25, 36, 35, 42, 32, 20, 22, 3],
+        2007: [2, 15, 9, 26, 28, 30, 33, 47, 38, 18, 6, 2],
+        2006: [2, 4, 7, 23, 25, 36, 35, 42, 32, 20, 6, 3],
+        2005: [2, 4, 7, 3, 25, 36, 35, 42, 32, 2, 6, 3],
+        2004: [2, 4, 7, 3, 5, 6, 15, 4, 12, 2, 6, 3],
+        2003: [2, 4, 7, 2, 5, 6, 5, 4, 2, 2, 6, 3],
+        2002: [2, 4, 7, 2, 5, 6, 5, 2, 2, 2, 6, 3],
+        2001: [2, 4, 7, 2, 12, 6, 5, 9, 5, 2, 6, 3],
+        2000: [2, 4, 7, 4, 9, 3, 5, 4, 2, 10, 6, 3],
+        1999: [2, 4, 7, 2, 5, 6, 3, 2, 2, 10, 6, 3],
+        1998: [2, 4, 7, 3, 5, 6, 5, 4, 3, 2, 6, 3]
+    };
+    var dataYears = {
+        5: [],
+        10: [],
+        20: []
+    };
+    for (var i = 0; i < 20; i++) {
+        var sum = 0;
+        for (var j = 0; j < 12; j++) {
+            sum += dataMonths[2017-i][j];
+        }
+        if (i < 5)
+        {
+            dataYears[5].push(sum);
+            dataYears[10].push(sum);
+            dataYears[20].push(sum);
+        }
+        if (i > 4 && i < 10)
+        {
+            dataYears[10].push(sum);
+            dataYears[20].push(sum);
+        }
+        if (i > 9 && i < 20)
+        {
+            dataYears[20].push(sum);
+        }
+    }
+    var YoY = {
+        2017: [2.0, 22.2, 13.3, 4.5, 6.3, -25.2, -12.3, -23.4, -12.0, -1.5, -22.0, 12.2],
+        2016: [2.0, 2.2, 3.3, 4.5, 6.3, -5.2, -2.3, 3.4, 13.0, -1.5, -2.0, -2.2],
+        2015: [],
+        2014: []
+    }; //同比增长率
+    var MoM = {
+        2017: [12.2, 2.0, 4.3, 12.5, -9.3, -10.2, 20.3, 23.4, -0.7, -12.5, -7.0, 3.2],
+        2016: [12.2, 2.0, 4.3, 2.5, 1.3, 10.2, 2.3, 2.4, -1.7, -12.5, -2.0, -1.2],
+        2015: [],
+        2014: []
+    }; //环比增长率
+    function toDecimal2(x) {
+        var f = parseFloat(x);
+        if (isNaN(f)) {
+            return false;
+        }
+        var f = Math.round(x*100)/100;
+        var s = f.toString();
+        var rs = s.indexOf('.');
+        if (rs < 0) {
+            rs = s.length;
+            s += '.';
+        }
+        while (s.length <= rs + 2) {
+            s += '0';
+        }
+        return s;
+    }
+    function calculate(currentYear) {
+        var i;
+        //计算同比增长率
+        if (timeType == '按年度') {
+            YoY[currentYear] = [];
+            MoM[currentYear] = [];
+        }
+        else {
+            for(i=0;i<12;i++){
+                if(dataMonths[currentYear][i] != 0){
+                    YoY[currentYear][i]=(dataMonths[currentYear][i]-dataMonths[currentYear-1][i])/dataMonths[currentYear-1][i]*100;
+                }
+                else{
+                    YoY[currentYear][i]=0;
+                }
+                YoY[currentYear][i] = toDecimal2(YoY[currentYear][i]);
+            }
+        }
+        //计算环比增长率
+        if(dataMonths[currentYear-1][11]!=0){
+            MoM[currentYear][0]=(dataMonths[currentYear][0]-dataMonths[currentYear-1][11])/dataMonths[currentYear-1][11]*100;
+        }
+        else{
+            MoM[currentYear][0]=0;
+        }
+        MoM[currentYear][0] = toDecimal2(MoM[currentYear][0]);
+        for(i=1;i<=11;i++){
+            if(dataMonths[currentYear][i-1]!=0){
+                MoM[currentYear][i]=(dataMonths[currentYear][i]-dataMonths[currentYear][i-1])/dataMonths[currentYear][i-1]*100;
+            }
+            MoM[currentYear][i] = toDecimal2(MoM[currentYear][i]);
+        }
+    }
+    calculate(2017);
+    calculate(2016);
+    calculate(2015);
+    var option = {
+        //backgroundColor: '#60C0DD',
+        color: myColor,
+        tooltip: {
+            trigger: 'axis',
+            //formatter:
+            textStyle: {
+                //color: '#FF3930',
+                fontStyle: 'normal',
+                fontWeight: 'normal',
+                fontSize: 22
+            },
+            formatter: "{b}:<br/>{a0}:{c0}<br/>{a1}:{c1}<br/><br/>{a2}:{c2}%<br/>{a3}:{c3}%",
+            axisPointer: {
+                //type: 'cross',
+                crossStyle: {
+                    color: '#94ff61'
+                }
+            }
+        },
+        legend: {
+            data:['上年度','本年度','同比增长率','环比增长率'],
+            bottom: '-1%',
+            left: 'center',
+            itemGap: 30,//图例间距
+            itemWidth: 40,//图例标记的图形宽度
+            itemHeight: 20,//图例标记的图形高度
+            textStyle: {
+                fontWeight: 'normal',
+                fontSize: 16//图例字体大小
+            }
+        },
+        grid: {
+            show: true,//是否显示直角坐标系网格
+            top: '10%',
+            bottom: '10%',//grid 组件离容器下侧的距离
+            left: '3%',
+            right: '3%',
+            //backgroundColor: '#27727B',//直角坐标系背景颜色
+            containLabel: true//containLabel 为 true 的时候，grid.left  grid.right  grid.top  grid.bottom  grid.width  grid.height 决定的是包括了坐标轴标签在内的所有内容所形成的矩形的位置。
+        },
+        xAxis: [
+            {
+                type: 'category',
+                show: true,
+                data: xdata.year,
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            // {
+            //     type: 'category',
+            //     show: false,
+            //     data: xdata.year,
+            //     axisPointer: {
+            //         type: 'shadow',
+            //         show: false
+            //     }
+            // }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '话务量',
+                nameTextStyle: {
+                    color: '#222222',
+                    fontStyle: 'normal',
+                    fontWeight: 'normal',
+                    fontSize: 14
+                },
+                min: 0,
+                max: 100,//Math.ceil()对小数上取整，如传递的参数是45.95,返回46;如果传递的参数是-45.95,返回-45.
+                interval: Math.ceil(max*2/100)*10//将坐标刻度调整为10的倍数
+            },
+            {
+                type: 'value',
+                name: '增长率/%',
+                nameTextStyle: {
+                    color: '#222222',
+                    fontStyle: 'normal',
+                    fontWeight: 'normal',
+                    fontSize: 14
+                },
+                min: -170,
+                max: 130,
+                interval: 30
+            }
+        ],
+        series: [
+            {
+                name: '上年度',
+                type: 'bar',
+                data: dataMonths[2016]
+            },
+            {
+                name: '本年度',
+                type: 'bar',
+                data: dataMonths[2017]
+            },
+            {
+                name: '同比增长率',
+                //type: 'bar',
+                type: 'line',
+                // xAxisIndex: 1,
+                yAxisIndex: 1,
+                data: YoY[2017]
+            },
+            {
+                name: '环比增长率',
+                //type: 'bar',
+                type: 'line',
+                // xAxisIndex: 1,
+                yAxisIndex: 1,
+                data: MoM[2017]
+            }
+        ]
+    };
+    var option2 = {
+        color: ['#6E9BC4','#B6DDD8','#A696CE','#99C5D1','#66DD94','#70AFC4','#DB5E8C','#D9534F','#2D323D','#6F6F6F'],
+        tooltip: {
+            trigger: 'axis',
+            //formatter:
+            textStyle: {
+                //color: '#FF3930',
+                fontStyle: 'normal',
+                fontWeight: 'normal',
+                fontSize: 16
+            },
+            axisPointer: {
+                //type: 'cross',
+                crossStyle: {
+                    color: '#94ff61'
+                }
+            }
+        },
+        legend: {
+            data:['应急事件数量','毁坏公路里程'],
+            bottom: '-1%',
+            left: 'center',
+            itemGap: 30,//图例间距
+            itemWidth: 40,//图例标记的图形宽度
+            itemHeight: 20,//图例标记的图形高度
+            textStyle: {
+                fontWeight: 'normal',
+                fontSize: 16//图例字体大小
+            }
+        },
+        grid: {
+            show: true,//是否显示直角坐标系网格
+            top: '10%',
+            bottom: '10%',//grid 组件离容器下侧的距离
+            left: '5%',
+            right: '5%',
+            //backgroundColor: '#27727B',//直角坐标系背景颜色
+            containLabel: true//containLabel 为 true 的时候，grid.left  grid.right  grid.top  grid.bottom  grid.width  grid.height 决定的是包括了坐标轴标签在内的所有内容所形成的矩形的位置。
+        },
+        xAxis: [
+            {
+                type: 'category',
+                show: true,
+                data: [
+                    {value: '福州市', textStyle: {color: '#222222', fontSize: 16}},
+                    {value: '厦门市', textStyle: {color: '#222222', fontSize: 16}},
+                    {value: '莆田市', textStyle: {color: '#222222', fontSize: 16}},
+                    {value: '三明市', textStyle: {color: '#222222', fontSize: 16}},
+                    {value: '泉州市', textStyle: {color: '#222222', fontSize: 16}},
+                    {value: '漳州市', textStyle: {color: '#222222', fontSize: 16}},
+                    {value: '南平市', textStyle: {color: '#222222', fontSize: 16}},
+                    {value: '龙岩市', textStyle: {color: '#222222', fontSize: 16}},
+                    {value: '宁德市', textStyle: {color: '#222222', fontSize: 16}}
+                ],
+                axisPointer: {
+                    type: 'shadow'
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '应急事件数量/件',
+                nameTextStyle: {
+                    color: '#222222',
+                    fontStyle: 'normal',
+                    fontWeight: 'normal',
+                    fontSize: 14
+                },
+                min: 0,
+                max: 100,
+                interval: 10
+            },
+            {
+                type: 'value',
+                name: '毁坏里程/公里',
+                nameTextStyle: {
+                    color: '#222222',
+                    fontStyle: 'normal',
+                    fontWeight: 'normal',
+                    fontSize: 14
+                },
+                min: 0,
+                max: 500,
+                interval: 50
+            }
+        ],
+        series: [
+            {
+                name: '应急事件数量',
+                type: 'bar',
+                data: [53, 48, 49, 61, 24, 68, 53, 47, 55]
+            },
+            {
+                name: '毁坏公路里程',
+                type: 'bar',
+                yAxisIndex: 1,
+                data: [153, 248, 149, 361, 254, 268, 353, 247, 435]
+            }
+        ]
+    };
+    chart1.setOption(option3,true);
+    chart2.setOption(option4,true);
+    chart3.setOption(option5,true);
+    chart4.setOption(option,true);
+    chart5.setOption(option2,true);
+</script>
+<!-- /JAVASCRIPTS -->
+</body>
+
+</html>

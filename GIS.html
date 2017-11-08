@@ -1,0 +1,696 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GIS分析展示平台</title>
+<script src="js/bmap/jquery.min.js"></script>
+<script src="js/bmap/echarts.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=FSzZET8GwDr3XqVa5f0TXXlG"></script>
+<script src="js/bmap//bmap.min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.js"></script>
+<link rel="stylesheet" href="css/gis_main.css">
+<link href="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" type="text/css" href="css/cloud-admin.css">
+<link rel="stylesheet" type="text/css" href="css/themes/default.css" id="skin-switcher">
+<link rel="stylesheet" type="text/css" href="css/responsive.css">
+
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<!-- JQUERY UI-->
+<link rel="stylesheet" type="text/css" href="js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.min.css" />
+<!-- DATE RANGE PICKER -->
+<link rel="stylesheet" type="text/css" href="js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+<!-- DATA TABLES -->
+<link rel="stylesheet" type="text/css" href="js/datatables/media/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="js/datatables/media/assets/css/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="js/datatables/extras/TableTools/media/css/TableTools.min.css" />
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- FONTS -->
+<style>
+	.BMap_cpyCtrl  
+    {  
+        display:none;   
+    }  
+    .anchorBL{  
+        display:none;   
+    }   
+</style>
+<script>
+var mapCenter = [118.144512,25.948971];
+//var mapCenter = [33.969727, 0.549308];
+var mapZoom = 9;
+var isTrafficCtrlShow = false;
+var isLegendShow = {"高速路网":true, "桥梁":true};
+
+var isInitialize = false;
+var isSearchLine = false;
+
+function showEcharts() {
+	var app = {};
+	app.title = '福州桥梁管理系统';
+	
+	var pie1Data = [
+				{value:300, name:'涵洞'},
+				{value:400, name:'特大桥'},
+				{value:410, name:'大桥'},
+				{value:434, name:'中桥'},
+				{value:2500, name:'小桥'}
+			];
+	var pie1LegendData = ['特大桥','大桥','中桥','小桥', '涵洞'];
+	var pie2Data = [
+				{value:18, name:'五类桥'},
+				{value:410, name:'二类桥'},
+				{value:334, name:'三类桥'},
+				{value:3350, name:'一类桥'},
+				{value:335, name:'四类桥'},
+				{value:20 , name:'未评级'}
+			];
+	var pie2LegendData = ['一类桥','二类桥','三类桥','四类桥','五类桥', '未评级'];
+	if (isSearchLine) {
+		inStartName = "";
+		inEndName = "";
+		title1 = document.getElementById('title1');
+		title1.innerHTML = "<b>流量监测站总数</b>";
+		title2 = document.getElementById('title2');
+		title2.innerHTML = "<b>监测设备总数</b>";
+		
+		pie1Data = [
+			{value:300, name:'交调设备'},
+			{value:400, name:'车检设备'},
+			{value:30, name:'不停车超限检测'}
+		];
+		pie2Data = [
+			{value:1300, name:'在线'},
+			{value:400, name:'离线'}
+		];
+		pie1LegendData = ['交调设备', '车检设备', '不停车超限检测'];
+		pie2LegendData = ['在线', '离线'];
+	}
+
+	var myChartPie1 = echarts.init(document.getElementById('pie1'));
+	myChartPie1.setOption(option = {
+		tooltip : {
+			trigger: 'item',
+			formatter: "{b} : {c} ({d}%)",
+			textStyle: {
+				fontSize: 24
+			}
+		},
+		legend: {
+			orient: 'horizontal',
+			bottom: 'bottom',
+			data: pie1LegendData,
+			textStyle: {
+				fontSize: 24
+			}
+		},
+		series : [
+			{
+				name: '桥梁类别',
+				type: 'pie',
+				radius : '60%',
+				center: ['50%', '45%'],
+				data: pie1Data,
+				label: {
+					normal: {
+						textStyle: {
+							fontSize: 24
+						}
+					}
+				},
+				itemStyle: {
+					emphasis: {
+						shadowBlur: 10,
+						shadowOffsetX: 0,
+						shadowColor: 'rgba(0, 0, 0, 0.5)'
+					}
+				}
+			}
+		]
+	});
+	
+	var myChartPie2 = echarts.init(document.getElementById('pie2'));
+	myChartPie2.setOption(option = {
+		tooltip : {
+			trigger: 'item',
+			formatter: "{b} : {c} ({d}%)",
+			textStyle: {
+				fontSize: 24
+			}
+		},
+		legend: {
+			orient: 'horizontal',
+			bottom: 'bottom',
+			data: pie2LegendData,
+			textStyle: {
+				fontSize: 24
+			}
+		},
+		series : [
+			{
+				name: '桥梁等级',
+				type: 'pie',
+				radius : '60%',
+				center: ['50%', '40%'],
+				data: pie2Data,
+				label: {
+					normal: {
+						textStyle: {
+							fontSize: 24
+						}
+					}
+				},
+				itemStyle: {
+					emphasis: {
+						shadowBlur: 10,
+						shadowOffsetX: 0,
+						shadowColor: 'rgba(0, 0, 0, 0.5)'
+					}
+				}
+			}
+		]
+	});
+	
+	var myChartMap = echarts.init(document.getElementById('bmap'));
+	//$.get('data/highway-generalize-bmap.json', function (data) {
+	$.get('data/guo_shengdao_bmap.json', function (data) {
+		myChartMap.hideLoading();
+
+		var lines = data.map(function (track) {
+			return {
+				coords: track.map(function (seg, idx) {
+					return seg.coord;
+				})
+			};
+		});		
+		
+		var option = {
+			bmap: {
+				center: mapCenter,
+				zoom: mapZoom,
+				roam: true,
+				enableAutoResize: true,
+				mapStyle: {
+					styleJson: [{
+						'featureType': 'water',
+						'elementType': 'all',
+						'stylers': {
+							'color': '#d1d1d1'
+						}
+					}, {
+						'featureType': 'land',
+						'elementType': 'all',
+						'stylers': {
+							'color': '#f3f3f3'
+						}
+					}, {
+						'featureType': 'railway',
+						'elementType': 'all',
+						'stylers': {
+							'visibility': 'off'
+						}
+					}, {
+						'featureType': 'highway',
+						'elementType': 'all',
+						'stylers': {
+							'color': '#fdfdfd'
+						}
+					}, {
+						'featureType': 'highway',
+						'elementType': 'labels',
+						'stylers': {
+							'visibility': 'off'
+						}
+					}, {
+						'featureType': 'arterial',
+						'elementType': 'geometry',
+						'stylers': {
+							'color': '#fefefe'
+						}
+					}, {
+						'featureType': 'arterial',
+						'elementType': 'geometry.fill',
+						'stylers': {
+							'color': '#fefefe'
+						}
+					}, {
+						'featureType': 'poi',
+						'elementType': 'all',
+						'stylers': {
+							'visibility': 'off'
+						}
+					}, {
+						'featureType': 'green',
+						'elementType': 'all',
+						'stylers': {
+							'visibility': 'off'
+						}
+					}, {
+						'featureType': 'subway',
+						'elementType': 'all',
+						'stylers': {
+							'visibility': 'off'
+						}
+					}, {
+						'featureType': 'manmade',
+						'elementType': 'all',
+						'stylers': {
+							'color': '#d1d1d1'
+						}
+					}, {
+						'featureType': 'local',
+						'elementType': 'all',
+						'stylers': {
+							'color': '#d1d1d1'
+						}
+					}, {
+						'featureType': 'arterial',
+						'elementType': 'labels',
+						'stylers': {
+							'visibility': 'off'
+						}
+					}, {
+						'featureType': 'boundary',
+						'elementType': 'all',
+						'stylers': {
+							'color': '#fefefe'
+						}
+					}, {
+						'featureType': 'building',
+						'elementType': 'all',
+						'stylers': {
+							'color': '#d1d1d1'
+						}
+					}, {
+						'featureType': 'label',
+						'elementType': 'labels.text.fill',
+						'stylers': {
+							'color': '#000000'
+						}
+					}]
+				}
+			},
+			tooltip: {
+				trigger: 'item',
+				hideDelay: 500,
+				enterable: true,
+				triggerOn: "click",
+				backgroundColor: 'rgba(255,255,255,1)',//背景颜色（此时为默认色）
+				borderWidth: 1,
+				borderRadius: 5,//边框圆角
+				padding: 14,    // [5, 10, 15, 20] 内边距
+				textStyle:{
+					color:'#000'
+				},
+				extraCssText: 'onselectstart="return true"',
+				formatter: function (params, ticket, callback) {
+					src = ""
+					if (params.seriesName == '高速路网'){
+						src  = '<div class="container" padding-top:-50px;>'
+						src += '	<div style="height:35px;margin-top:-20px;color:#4169E1"><h2><strong>S309</strong></h2></div>'
+						src += '	<table class="table table-bordered table-striped">'
+						src += '		<tbody>'
+						src += '			<tr>'
+						src += '				<td class="success"><strong>路线起点名称：</strong></td>'
+						src += '				<td colspan="3">漳州东山</td>'
+						src += '			</tr>'
+						src += '			<tr>'
+						src += '				<td class="success"><strong>路线终点名称：</strong></td>'
+						src += '				<td colspan="3">龙岩武平县东留乡</td>'
+						src += '			</tr>'
+						src += '		</tbody>'
+						src += '	</table>'
+						src += '</div>'
+					}else{
+						src  = '<div class="container" padding-top:-50px;>'
+						src += '	<div style="height:35px;margin-top:-20px;color:#4169E1"><h2><strong>' + params.name + '</strong></h2></div>'
+						src += '	<table class="table table-bordered table-striped">'
+						src += '		<tbody>'
+						src += '			<tr>'
+						src += '				<td class="success"><strong>管理单位：</strong></td>'
+						src += '				<td colspan="3">龙岩市交通运输局</td>'
+						src += '			</tr>'
+						src += '			<tr>'
+						src += '				<td class="success"><strong>桥梁类型：</strong></td>'
+						src += '				<td colspan="3">预应力砼桥</td>'
+						src += '			</tr>'
+						src += '			<tr>'
+						src += '				<td class="success"><strong>路线名称：</strong></td>'
+						src += '				<td style="width:200px;">京东线</td>'
+						src += '				<td class="success"><strong>路线编码：</strong></td>'
+						src += '				<td style="width:200px;">G357</td>'
+						src += '			</tr>'
+						src += '			<tr>'
+						src += '				<td class="success"><strong>所在地：</strong></td>'
+						src += '				<td style="width:200px;">龙岩市永定区</td>'
+						src += '				<td class="success"><strong>中心编号：</strong></td>'
+						src += '				<td style="width:200px;">K0+203.8</td>'
+						src += '			</tr>'
+						src += '			<tr>'
+						src += '				<td class="success"><strong>桥梁性质：</strong></td>'
+						src += '				<td style="width:200px;">永久性桥</td>'
+						src += '				<td class="success"><strong>桥梁分类：</strong></td>'
+						src += '				<td style="width:200px;">小桥</td>'
+						src += '			</tr>'
+						src += '			<tr>'
+						src += '				<td class="success"><strong>支架类型：</strong></td>'
+						src += '				<td style="width:200px;">无</td>'
+						src += '				<td class="success"><strong>桥梁种类：</strong></td>'
+						src += '				<td style="width:200px;">简支空心板桥</td>'
+						src += '			</tr>'
+						src += '			<tr>'
+						src += '				<td class="success"><strong>负载等级：</strong></td>'
+						src += '				<td style="width:200px;">公路—Ⅰ级</td>'
+						src += '				<td class="success"><strong>最大负载：</strong></td>'
+						src += '				<td style="width:200px;">无</td>'
+						src += '			</tr>'
+						src += '		</tbody>'
+						src += '	</table>'
+						src += '	<div style="text-align:right;">'
+						src += '	<button class="btn btn-default" data-dismiss="modal" style="">更多</button>'
+						src += '	</div>'
+						src += '</div>'
+					}
+					
+					return src;
+				}
+			},
+			series: [{
+				name: '高速路网',
+				type: 'lines',
+				coordinateSystem: 'bmap',
+				data: lines,
+				polyline: true,
+				lineStyle: {
+					normal: {
+						color: 'purple',
+						opacity: 0.6,
+						width: 8
+					},
+					emphasis: {
+						color: '#FFFF00',
+						opacity: 1,
+						width: 12
+					}
+				}
+			}]
+		};
+		
+		//初始化添加数据
+		if (isInitialize) {
+			option.series.push({
+				name: '桥梁',
+				type: 'scatter',
+				coordinateSystem: 'bmap',
+				data: [
+					{name: "中金渠小桥", value: [116.928799678,24.637908704344]},
+					{name: "中金渠小桥", value: [117.11830235587, 24.113495557239]},
+					{name: "中金渠小桥", value: [116.65394995357, 24.828444548201]},
+					{name: "中金渠小桥", value: [116.55534407046, 25.576009276688]},
+					{name: "中金渠小桥", value: [116.43740590443, 25.249984584723]},
+					{name: "中金渠小桥", value: [118.35975033065, 24.595347484803]},
+					{name: "中金渠小桥", value: [118.89858926959, 24.908399471649]},
+					{name: "中金渠小桥", value: [117.44067385655, 25.307365623116]},
+					{name: "中金渠小桥", value: [118.0286340248, 25.462624700918]},
+					{name: "中金渠小桥", value: [119.11122852827, 25.288430773352]},
+					{name: "中金渠小桥", value: [118.37662550908, 25.628937430376]},
+					{name: "中金渠小桥", value: [118.42578466173, 26.391857481512]},
+					{name: "中金渠小桥", value: [118.01382356479, 26.600629357273]},
+					{name: "中金渠小桥", value: [119.39407902554, 25.583215629078]},
+					{name: "中金渠小桥", value: [119.57386290984, 25.839059758269]},
+					{name: "中金渠小桥", value: [119.08807695479, 25.882133233774]},
+					{name: "中金渠小桥", value: [119.60920069959, 26.142203644483]},
+					{name: "中金渠小桥", value: [118.17128129228, 26.691375222749]},
+					{name: "中金渠小桥", value: [118.54035989783, 27.98371938444]},
+					{name: "中金渠小桥", value: [118.8339679175, 27.379946090646]},
+					{name: "中金渠小桥", value: [119.3918380893, 27.060548152564]},
+					{name: "中金渠小桥", value: [117.19624120839, 24.829942881411]}],
+				symbolSize: 20,
+				label: {
+					normal: {
+						show: false
+					},
+					emphasis: {
+						show: false
+					}
+				},
+				itemStyle: {
+					emphasis: {
+						borderColor: '#fff',
+						borderWidth: 1
+					}
+				}
+			});
+			option.legend = {
+				selected: isLegendShow,
+				inactiveColor: "#696969",
+				orient: 'vertical',
+				right: 170,
+				bottom: 5,
+				textStyle: {
+					fontSize: 24
+				},
+				data: ['桥梁']
+			};
+		}
+		
+		myChartMap.setOption(option);
+		if (!app.inNode) {
+			// 添加百度地图插件
+			var bmap = myChartMap.getModel().getComponent('bmap').getBMap();
+			bmap.addControl(new BMap.ScaleControl({anchor: BMAP_ANCHOR_BOTTOM_LEFT}));
+			bmap.addControl(new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT}));
+			bmap.addControl(new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_RIGHT}));   //添加地图类型控件
+			bmap.addControl(new BMap.OverviewMapControl({isOpen:true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT}));
+			trafficCtrl = new BMapLib.TrafficControl({showPanel:true, anchor: BMAP_ANCHOR_BOTTOM_LEFT});
+			//bmap.addControl(trafficCtrl);
+			if (isTrafficCtrlShow) {
+				//trafficCtrl.show();
+				//trafficCtrl.setPopOffset(trafficCtrl.getOffset());
+			}
+		}
+	
+		if (isSearchLine) {
+			// 取消之前高亮的图形
+			myChartMap.dispatchAction({
+				type: 'downplay',
+				seriesIndex: 0,
+				dataIndex: 0
+			});
+			myChartMap.dispatchAction({
+				type: 'highlight',
+				seriesIndex: 0,
+				dataIndex: 0
+			});
+			// 显示 tooltip
+			myChartMap.dispatchAction({
+				type: 'showTip',
+				seriesIndex: 0,
+				dataIndex: 0
+			});
+		}
+	
+		myChartMap.on('legendselectchanged', function (params) {
+			isLegendShow = myChartMap.getOption().legend[0].selected;
+			UpdateWindow();
+			if (isSearchLine) {
+				// 取消之前高亮的图形
+				myChartMap.dispatchAction({
+					type: 'downplay',
+					seriesIndex: 0,
+					dataIndex: 0
+				});
+				myChartMap.dispatchAction({
+					type: 'highlight',
+					seriesIndex: 0,
+					dataIndex: 0
+				});
+				// 显示 tooltip
+				myChartMap.dispatchAction({
+					type: 'showTip',
+					seriesIndex: 0,
+					dataIndex: 0
+				});
+			}
+		});
+	});
+};
+
+$(document).ready(function(){
+	showEcharts();
+});  
+
+var hideORshow = 0;
+function funcShowHideRightPanel() {
+	var myChart = echarts.getInstanceByDom(document.getElementById('bmap'));
+	var myPieChart1 = echarts.getInstanceByDom(document.getElementById('pie1'));
+	var myPieChart2 = echarts.getInstanceByDom(document.getElementById('pie2'));
+	isLegendShow = myChart.getOption().legend[0].selected;
+	if (hideORshow == 0){
+		$("#showHideRightPanel").get(0).checked = false;
+		$('#content').attr('style', 'right:0px;');
+		$("#bmap").width($('#content').width());
+		$("#pie1").width($("#right").width());
+		$("#pie2").width($("#right").width());
+		UpdateWindow();
+		hideORshow = 1;
+	}else{
+		$("#showHideRightPanel").get(0).checked = true;
+		$('#content').attr('style', 'right:28%;');
+		$("#bmap").width($("#content").width());
+		$("#bmap").height($("#content").height());
+		$("#pie1").width($("#right").width());
+		$("#pie1").height($("#right").height()*0.40);
+		$("#pie2").width($("#right").width());
+		$("#pie2").height($("#right").height()*0.40);
+		UpdateWindow();
+		hideORshow = 0;
+	}
+}
+
+function onSearch() {
+	var myChart = echarts.getInstanceByDom(document.getElementById('bmap'));
+	var myPieChart1 = echarts.getInstanceByDom(document.getElementById('pie1'));
+	var myPieChart2 = echarts.getInstanceByDom(document.getElementById('pie2'));
+	
+	var inStartName = document.getElementById('inStartName').value;
+	var inEndName = document.getElementById('inEndName').value;
+	if (inStartName!="" & inEndName!="") {
+		isSearchLine = true;
+	}
+	
+	if (!isInitialize) {
+		isInitialize = true;
+		$('#split').attr('style', '');
+		$('#right').attr('style', '');
+		$("#showHideRightPanel").get(0).checked = false;
+		
+		$('#content').attr('style', 'right:28%;');
+		$("#bmap").width($("#content").width());
+		$("#bmap").height($("#content").height());
+		$("#pie1").width($("#right").width());
+		$("#pie2").width($("#right").width());
+		UpdateWindow();
+	}else{
+		if (hideORshow == 1) {
+			$('#content').attr('style', 'right:0px;');
+			$("#bmap").width($("#content").width());
+			$("#bmap").height($("#content").height());
+			$("#pie1").width($("#right").width());
+			$("#pie2").width($("#right").width());
+			isLegendShow = myChart.getOption().legend[0].selected;
+			UpdateWindow();
+		}else {
+			hideORshow = 1;
+			isLegendShow = myChart.getOption().legend[0].selected;
+			UpdateWindow();
+		}
+	}
+}
+
+function onSearchCancel() {
+	if (isInitialize) {
+		document.getElementById('inStartName').value = "";
+		document.getElementById('inEndName').value = "";
+		isSearchLine = false;
+		isInitialize = false;
+		hideORshow = 0;
+		
+		$("#showHideRightPanel").get(0).checked = true;
+		$('#split').attr('style', 'display:none;');
+		$('#right').attr('style', 'display:none;');
+		$('#content').attr('style', 'right:0px;');
+		
+		$("#bmap").width($("#content").width());
+		$("#bmap").height($("#content").height());
+		UpdateWindow();
+	}
+}
+
+function UpdateWindow() {
+	var myChart = echarts.getInstanceByDom(document.getElementById('bmap'));
+	var myPieChart1 = echarts.getInstanceByDom(document.getElementById('pie1'));
+	var myPieChart2 = echarts.getInstanceByDom(document.getElementById('pie2'));
+	
+	bmap = myChart.getOption().bmap;
+	mapCenter = bmap[0].center;
+	mapZoom = bmap[0].zoom;
+	isTrafficCtrlShow = trafficCtrl.bShow;
+	if (!isInitialize) {
+		isLegendShow = myChart.getOption().legend[0].selected;
+	}
+	
+	echarts.dispose(myChart);
+	echarts.dispose(myPieChart1);
+	echarts.dispose(myPieChart2);
+	showEcharts();
+}
+</script>
+</head>
+
+<body>
+<div>
+    <input id="showHideRightPanel" class="showHideRightPanelChk" type="checkbox">
+    <div class="topPanel" style="background-color:#70afc4;">
+		<div class="col-md-12" style="margin-left:5px;height:40px;padding-top:4px;vertical-align:middle;">
+			<span style="font-size:18px;vertical-align:middle;"><b>类别：</b></span>
+			<select style="width:200px;height:24px;vertical-align:middle;">
+				<option value="1">桥梁</option>
+				<option value="2">隧道</option>
+				<option value="3">超限监测站</option>
+				<option value="4">养护基地</option>
+				<option value="6">交通流量监测站</option>
+				<option value="7">视频监控</option>
+				<option value="8">可变情报板</option>
+				<option value="9">路网事件</option>
+				<option value="10">养护巡查</option>
+			</select>
+			<span style="margin-left:10px;font-size:18px;vertical-align:middle;"><b>年份：</b></span>
+			<select style="width:200px;height:24px;vertical-align:middle;">
+				<option value="2016">2016</option>
+				<option value ="2015">2015</option>
+				<option value ="2014">2014</option>
+				<option value ="2014">2013</option>
+			</select>
+			<span style="margin-left:10px;font-size:18px;vertical-align:middle;"><b>月份：</b></span>
+			<select style="width:200px;height:24px;vertical-align:middle;">
+				<option value ="Jan">1月</option>
+				<option value ="Feb">2月</option>
+				<option value="Mar">3月</option>
+				<option value="Apr">4月</option>
+				<option value="May">5月</option>
+				<option value="Jun">6月</option>
+				<option value="Jul">7月</option>
+				<option value="Aug">8月</option>
+				<option value="Sep">9月</option>
+				<option value="Oct">10月</option>
+				<option value="Nov">11月</option>
+				<option value="Dec">12月</option>
+			</select>
+			<span style="margin-left:10px;font-size:18px;vertical-align:middle;"><b>起点信息：</b></span>
+			<input id="inStartName"style="width:150px;height:25px;margin-top:2px;"></input>
+			<span style="margin-left:10px;font-size:18px;vertical-align:middle;"><b>终点信息：</b></span>
+			<input id="inEndName" style="width:150px;height:25px;margin-top:2px;"></input>
+			<button id="btn" style="margin-top:-2px;margin-left:10px;width:50px;height:30px;padding-top:4px;padding-left:11px;" class="btn btn-default" data-dismiss="modal" onclick="onSearch()">查询</button>
+			<button id="btn_cancel" style="margin-top:-2px;margin-left:10px;width:50px;height:30px;padding-top:4px;padding-left:11px;" class="btn btn-default" data-dismiss="modal" onclick="onSearchCancel()">清空</button>
+		</div>
+    </div>
+    <div id="content" class="contentPanel" style="right:0px;">
+        <div id="bmap" style="height:100%;width:100%;"> </div>
+    </div>
+    <div id="split" class="splitPanel" style="display:none;">
+        <label for="showHideRightPanel" class="splitMark"></label>
+        <label id="splitBorder" for="showHideRightPanel" class="splitBorder" onclick="funcShowHideRightPanel()"></label>
+    </div>
+    <div id="right" class="rightPanel" style="display:none;">
+		<div class="pieChartTitle" id="title1"><b>桥梁类别</b></div>
+        <div id="pie1" style="height:40%;width:100%;"> </div>
+		<div class="pieChartTitle" style="top:2%;" id="title2"><b>桥梁等级</b></div>
+		<div id="pie2" style="height:40%;width:100%;position:relative;top:10px;"> </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.checc.com/demo/namespace/datatransferservice/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="datatransferservice" targetNamespace="http://www.checc.com/demo/namespace/datatransferservice/">
+	<!-- 定义webservice使用的数据类型 -->
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.checc.com/demo/namespace/datatransferservice/">
+			<xsd:element name="storeDataTransferRecord">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="jsonArray" type="xsd:string" />
+						<xsd:element name="sendRequestTime" type="xsd:string" />
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="execDataTransferRecord">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element name="jsonArray" type="xsd:string" />
+						<xsd:element name="sendRequestTime" type="xsd:string" />
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="storeDataTransferRecordResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="result" maxOccurs="unbounded"
+							type="tns:storeResponse" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="execDataTransferRecordResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="result" maxOccurs="unbounded"
+							type="tns:execResponse" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="storeResponse">
+				<xsd:sequence>
+					<xsd:element name="storeStatusInfo" type="xsd:string" />
+					<xsd:element name="sendRequestTime" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="execResponse">
+				<xsd:sequence>
+					<xsd:element name="dataTransferExecInfo" type="xsd:string" />
+					<xsd:element name="sendRequestTime" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="storeDataTransferRecord">
+		<wsdl:part name="parameter" element="tns:storeDataTransferRecord" />
+	</wsdl:message>
+	<wsdl:message name="storeDataTransferRecordResponse">
+		<wsdl:part name="parameter" element="tns:storeDataTransferRecordResponse" />
+	</wsdl:message>
+	<wsdl:message name="execDataTransferRecord">
+		<wsdl:part name="parameter" element="tns:execDataTransferRecord" />
+	</wsdl:message>
+	<wsdl:message name="execDataTransferRecordResponse">
+		<wsdl:part name="parameter" element="tns:execDataTransferRecordResponse" />
+	</wsdl:message>
+	<wsdl:portType name="IDataTransferService">
+		<wsdl:operation name="storeDataTransferRecord">
+			<wsdl:input message="tns:storeDataTransferRecord" />
+			<wsdl:output message="tns:storeDataTransferRecordResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="execDataTransferRecord">
+			<wsdl:input message="tns:execDataTransferRecord" />
+			<wsdl:output message="tns:execDataTransferRecordResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="DataTransfererviceSOAP" type="tns:IDataTransferService">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="storeDataTransferRecord">
+			<soap:operation
+				soapAction="http://www.checc.com/demo/namespace/datatransferservice/storeDataTransferRecord" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="execDataTransferRecord">
+			<soap:operation
+				soapAction="http://www.checc.com/demo/namespace/datatransferservice/execDataTransferRecord" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="DataTransferService">
+		<wsdl:port name="DataTransfererviceSOAP" binding="tns:DataTransfererviceSOAP">
+			<soap:address
+				location="http://localhost:8080/fujian-demo/service/datatransferservice" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
